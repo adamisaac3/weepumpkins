@@ -35,12 +35,13 @@
     right: 1rem;
 }
 
-.nav-menu, .subcat-list-item{
+.nav-menu{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 1rem;
     list-style: none;
+
 }
 
 .front-header{
