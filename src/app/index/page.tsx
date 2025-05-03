@@ -8,14 +8,41 @@ export default function Page(){
         <>
         <Header />
         <main>
-            
+            <div className="front-images">
+                <img src="home-right.JPG" className="right-home-image" width={650} height={650}/>
+                <img src="home-left.JPG" className="left-home-image" width={650} height={650}/>
+            </div>
+
+            <img src="shop-favorites.png" className="shop-favorites-banner"/>
+            <div className="favorites-container">
+                <FavoriteContainer itemName="Shoulder Totes" imageLink="shoulder-totes.JPG" />
+                <FavoriteContainer itemName="Quilt Coats" imageLink="quilt-coats.JPG" />
+                <FavoriteContainer itemName="Zipper Pouches" imageLink="zipper-pouches.JPG" />
+                <FavoriteContainer itemName="Basket Totes" imageLink="basket-totes.JPG" />
+            </div>
         </main>
         </>
     );
 }
 
-function Header(){
 
+function FavoriteContainer({itemName, imageLink} : {itemName: string, imageLink: string}){
+    const url = itemName.replace(' ', '-').toLowerCase();
+    
+    return (
+        <>
+            <div className="favorite-div">
+                <a href={`/collections/${url}`} className="favorite-anchor">
+                    <img src={imageLink} width={250} height={250} className="favorite-image"/>
+                    <span className="favorite-item">{itemName}</span>
+                </a>
+            </div>
+        </>
+    )
+}
+
+function Header(){
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
     const [navDrawerOpen, setnavDrawerOpen] = useState(false);
     const handleNavClicked = () => setnavDrawerOpen(!navDrawerOpen);    
     
