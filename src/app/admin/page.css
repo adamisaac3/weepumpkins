@@ -1,0 +1,11 @@
+
+.admin-addItem-form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 1rem;
+
+    .description-input{
+        height: 60px;
+    }
+}

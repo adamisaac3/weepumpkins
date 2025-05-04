@@ -1,15 +1,4 @@
-
-.nav-drawer-overlay{
-    position: fixed;
-    width:20rem;
-    height:100%;
-    background-color: rgba(0,0,0,0.5);
-    transition: transform 0.5s ease-in-out;
-    transform: translateX(0);
-    
-}
-
-.shop-favorites-banner{
+.shop-favorites-banner, .shop-new-arrivals-banner{
     padding-top: 5rem;
     padding-left: 15rem;
     padding-bottom: 5rem;
@@ -62,14 +51,6 @@
     }
 }
 
-.nav-drawer-row-noc, .nav-drawer-row-cat{
-    border-bottom: 2px solid black;
-    width:100%;
-    padding: 1rem 0;
-    text-decoration: none;
-    color: inherit;
-    width: 100%;
-}
 
 .nav-drawer-row-item{
     text-decoration: none;
@@ -87,25 +68,3 @@
     top: 1rem;
     right: 1rem;
 }
-
-.nav-menu{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1rem;
-    list-style: none;
-
-}
-
-.front-header{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 5rem;
-}
-
-.nav-menu .nav-drawer-row-cat{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-} 
