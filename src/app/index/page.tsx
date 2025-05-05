@@ -2,13 +2,14 @@
 import { JSX, useState, useEffect } from "react";
 import {products} from "../lib/products";
 import './page.css';
+import {format, parse} from 'date-fns'
 <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+
 
 export default function Page(){
     
     const [navDrawerOpen, setnavDrawerOpen] = useState(false);
     const handleNavClicked = () => setnavDrawerOpen(!navDrawerOpen);
-    
     
     return(
         <>
@@ -16,8 +17,6 @@ export default function Page(){
         <main className={navDrawerOpen ? "main-content-blurred" : "main-content"}>
 
             
-
-
             <div className="front-images">
                 <a href="/collections/browse-all" className="right-home-anchor">
                     <img src="browse-all.png" className="right-home-image" width={600} height={750}/>
@@ -30,19 +29,91 @@ export default function Page(){
             <div className="new-arrivals">
                 <img src="shop-new-arrivals.png" className="shop-new-arrivals-banner" width={770} height={137} />
                 <NewArrivalsContainer />
-
             </div>
 
-            <img src="shop-favorites.png" className="shop-favorites-banner" width={770} height={137}/>
+            <div className="recent-event">
+                <img src="next-upcoming-event.png" className="next-upcoming-banner" width={770} height={137} />
+                <RecentEventContainer />
+            </div>
+
             <div className="favorites-container">
-                <FavoriteContainer itemName="Shoulder Totes" imageLink="shoulder-totes.JPG" />
-                <FavoriteContainer itemName="Quilt Coats" imageLink="quilt-coats.JPG" />
-                <FavoriteContainer itemName="Zipper Pouches" imageLink="zipper-pouches.JPG" />
-                <FavoriteContainer itemName="Basket Totes" imageLink="basket-totes.JPG" />
+                <img src="shop-favorites.png" className="shop-favorites-banner" width={770} height={137}/>
+                <div className="favorites-div">
+                    <FavoriteContainer itemName="Shoulder Totes" imageLink="shoulder-totes.JPG" />
+                    <FavoriteContainer itemName="Quilt Coats" imageLink="quilt-coats.JPG" />
+                    <FavoriteContainer itemName="Zipper Pouches" imageLink="zipper-pouches.JPG" />
+                    <FavoriteContainer itemName="Basket Totes" imageLink="basket-totes.JPG" />
+                </div>
             </div>
         </main>
         </>
     );
+}
+
+function RecentEventContainer(){
+    
+    function formatTime(timeString: string){
+        const parsed = parse(timeString, 'HH:mm', new Date());
+        return format(parsed, 'h:mm a')
+    }
+    
+    const [error, setError] = useState<string | null>(null);
+    const [event, setEvent] = useState<any | null>(null);
+    
+    useEffect(() => {
+        const fetchRecentEvent = async () => {
+            try{
+                const response = await fetch('/api/get-recent-event');
+                
+                const {event} = await response.json();
+
+                if(response.ok){
+                    setEvent(event[0]);
+                }
+                else{
+                    setError(response.text.toString || "Something went wrong");
+                }
+            }
+            catch(err){
+                setError((err as Error).message);
+            }
+        }
+        
+        fetchRecentEvent();
+    }, [])
+    
+    if(event){
+        let start_date = format(event?.start_date, 'MMMM do');
+        let end_date = format(event?.end_date, 'MMMM do yyyy')
+        let start_time = formatTime(event?.start_time)
+        let end_time = formatTime(event?.end_time)
+        return (
+            <>
+                <div className="recent-event-div">
+                    <img width={100} height={100} src={`https://jejfpctlmwnzbjejiljo.supabase.co/storage/v1/object/public/files/Events/${event?.thumbnail}`} alt="Recent Event Thumbnail" />
+                    <div className="recent-event-info">
+                        <div className="recent-info-top">
+                            <a href={event?.event_url}>
+                                <h2>{event?.name}</h2>
+                            </a>
+                            <p>Booth: {event?.booth}</p>
+                        </div>
+                        <div className="recent-info-middle">
+                            <p>{start_time} - {end_time}</p>
+                            <p>{start_date} - {end_date}</p>
+                            
+                        </div>
+                        <div className="recent-info-bottom">
+                            <p>{event?.address}</p>
+                            <p>{event?.city}</p>
+                            <p>{event?.state}</p>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
+    }
+    
 }
 
 function NewArrivalsContainer(){

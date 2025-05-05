@@ -1,8 +1,37 @@
-.shop-favorites-banner, .shop-new-arrivals-banner{
+.shop-favorites-banner, .shop-new-arrivals-banner, .next-upcoming-banner{
     padding-top: 5rem;
     padding-left: 15rem;
-    padding-bottom: 5rem;
+    padding-bottom: 3rem;
     
+}
+.recent-event {
+    display: flex;
+    flex-direction: column;
+
+    .recent-event-div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+
+        .recent-event-info {
+            display: flex;
+            flex-direction: column;
+
+            .recent-info-top, .recent-info-middle, .recent-info-bottom {
+                display: flex;
+                flex-direction: row;
+            }
+            .recent-info-top{
+                align-items:center;
+                justify-content: space-between;
+            }
+            .recent-info-middle, .recent-info-bottom{
+                gap: 15px;
+            }
+        }
+    }
 }
 
 .front-images{
@@ -23,10 +52,13 @@
 
 .favorites-container{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    padding-left: 1rem;
-    padding-right: 1rem;
+
+    .favorites-div{
+        display: flex;
+        flex-direction: row;
+    }
 }
 
 .favorites-container .favorite-div .favorite-anchor{

@@ -1,5 +1,5 @@
 
-.admin-addItem-form{
+.admin-addItem-form, .event-form{
     display: flex;
     flex-direction: column;
     width: 50%;

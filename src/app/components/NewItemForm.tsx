@@ -1,6 +1,5 @@
 'use client'
 import React, {JSX, useState} from 'react'
-import { AddItemToDB } from '../admin/actions';
 import {products} from '../lib/products'
 
 export default function NewItemForm(){
