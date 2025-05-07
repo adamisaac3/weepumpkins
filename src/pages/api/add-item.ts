@@ -11,7 +11,7 @@ export const config = {
 };
 
 function parseForm(req: NextApiRequest): Promise<{ fields: any; files: any }> {
-  const form = new IncomingForm({ multiples: true, maxFileSize: 10 * 1024 * 1024 });
+  const form = new IncomingForm({ multiples: true, maxFileSize: 10 * 1024 * 1024, allowEmptyFiles: true, minFileSize: 0 });
   return new Promise((resolve, reject) => {
     form.parse(req, (err, fields, files) => {
       if (err) reject(err);
@@ -29,12 +29,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { fields, files } = await parseForm(req);
     const db = await createAdminClient();
 
-    const images = Array.isArray(files.images) ? files.images : [files.images];
-    const imageNames = images.map((img: any) => img.originalFilename);
-
     let data, error;
+    let images;
 
     if (fields.category[0] === 'Clothing') {
+
+      images = [files.thumbnail[0], files.additional[0]];
+      const imageNames = images.map((img: any) => img.originalFilename);
+
       ({ data, error } = await db.rpc('insert_clothing', {
         p_name: fields.name[0],
         p_category: fields.category[0],
@@ -46,14 +48,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         p_images: imageNames,
       }));
     } else {
+
+      images = Array.isArray(files.additional) ? files.additional : [];
+      const thumbnailName = files.thumbnail[0].originalFilename;
+      const imageNames = images.map((img: any) => img.originalFilename);
+
       ({ data, error } = await db.rpc('insert_product', {
-        p_name: fields.name,
-        p_category: fields.category,
-        p_subcategory: fields.subcategory,
-        p_description: fields.description,
+        p_name: fields.name[0],
+        p_category: fields.category[0],
+        p_subcategory: fields.subcategory[0],
+        p_description: fields.description[0],
+        p_dimensions: fields.dimensions[0],
+        p_disclaimers: fields.disclaimers[0],
         p_price: Number(fields.price),
-        p_image_filenames: imageNames,
+        p_thumbnail: thumbnailName,
+        p_images: imageNames,
       }));
+
+      images.push(files.thumbnail[0]);
     }
 
     if (!error) {

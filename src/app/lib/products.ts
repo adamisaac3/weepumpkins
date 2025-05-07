@@ -40,4 +40,5 @@ export const products: Product[] = [
         dimensions: 'Approximate Size: Shoulder: Bust: Sleeve length: Coat length: Quilt weight: ',
         price: 155
     }
-]
+];
+

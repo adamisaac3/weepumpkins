@@ -1,23 +1,69 @@
-.shop-favorites-banner, .shop-new-arrivals-banner, .next-upcoming-banner{
-    padding-top: 5rem;
-    padding-left: 15rem;
-    padding-bottom: 3rem;
-    
+*{
+    font-family: 'Asul', serif;
 }
-.recent-event {
+.new-arrivals {
+
     display: flex;
     flex-direction: column;
 
-    .recent-event-div {
+    .shop-new-arrivals-banner{
+        align-self: center;
+        padding: 6rem 0
+    }
+
+    .recent-items-div {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
         gap: 3rem;
 
+        .recent-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+
+            .recent-item-image {
+                box-shadow: 0 0 5px black;
+            }
+
+            .arrival-name-category-div {
+                display: flex;
+                flex-direction: row;
+                gap: 0.2rem;
+            }
+        }
+
+    }
+}
+
+.recent-event {
+    display: flex;
+    flex-direction: column;
+
+    .next-upcoming-banner{
+        align-self: center;
+        padding: 6rem 0;
+    }
+
+    .recent-event-div {
+        display: flex;
+        flex-direction: row;
+        align-self: center;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        padding: 1rem 5rem;
+        background: #f6e6db;
+        box-shadow: 0 2px 4px rgba(0,0,0,1);
+        border: 2px solid black;
+        
         .recent-event-info {
             display: flex;
             flex-direction: column;
+            gap: 0.5rem;
 
             .recent-info-top, .recent-info-middle, .recent-info-bottom {
                 display: flex;
@@ -26,9 +72,15 @@
             .recent-info-top{
                 align-items:center;
                 justify-content: space-between;
+                gap: 1.5rem;
             }
             .recent-info-middle, .recent-info-bottom{
                 gap: 15px;
+            }
+
+            .view-all-events-button{
+                align-self: flex-end;
+                color: inherit;
             }
         }
     }
@@ -55,9 +107,18 @@
     flex-direction: column;
     justify-content: center;
 
+    .shop-favorites-banner{
+        align-self: center;
+        padding: 6rem 0;
+    }
+
     .favorites-div{
         display: flex;
         flex-direction: row;
+
+        .favorite-anchor .favorite-image{
+            box-shadow: 0 0 5px grey;
+        }
     }
 }
 
@@ -85,19 +146,4 @@
 }
 
 
-.nav-drawer-row-item{
-    text-decoration: none;
-    color: inherit;
-}
 
-
-.close-nav-drawer{
-    position: absolute;
-    margin-bottom: 1rem;
-}
-
-.close-nav-drawer{
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-}

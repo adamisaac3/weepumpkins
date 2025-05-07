@@ -9,7 +9,33 @@ export default function NewItemForm(){
     const [disclaimers, setDisclaimers] = useState<JSX.Element | null>(null);
     const [dimensions, setDimensions] = useState<JSX.Element | null>(null);
     const [price, setPrice] = useState<JSX.Element | null>(null);
+    const [imageInputs, setImageInputs] = useState<JSX.Element | null>(null);
 
+
+    function getImageInputs(category: string){
+        if(category === 'Clothing'){
+            setImageInputs (
+                <>
+                    <label htmlFor="thumbnail">Choose the front image of the clothing: </label>
+                    <input name="thumbnail" type="file" required></input> 
+
+                    <label htmlFor="additional-images">Choose the back image of the clothing: </label>
+                    <input name="additional" type="file" required></input>
+                </>
+            )
+        }
+        else{
+            setImageInputs (
+                <>
+                    <label htmlFor="thumbnail">Choose the thumbnail image: </label>
+                    <input name="thumbnail" type="file" required></input> 
+
+                    <label htmlFor="additional-images">Choose additional images: </label>
+                    <input name="additional" type="file" multiple></input>
+                </>
+            )
+        }
+    }
 
     function getDimensions(subcategory: string){
         const product = products.find((p) => p.subcategory === subcategory)
@@ -90,6 +116,7 @@ export default function NewItemForm(){
                     getPrice(e.target.value);
                     getDisclaimers(e.target.value);
                     getDimensions(e.target.value);
+                    getImageInputs(e.target.value);
                 }}>
                     <option value="" disabled hidden></option>
                     {subcategories}
@@ -132,9 +159,8 @@ export default function NewItemForm(){
                 {disclaimers}
                 {dimensions}
                 {price}
-
-                <label htmlFor="images">Choose images: </label>
-                <input name="images" type="file" multiple required></input>    
+                {imageInputs};
+                   
 
                 <button type="submit">Submits</button>         
             </form>

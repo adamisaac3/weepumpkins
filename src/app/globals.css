@@ -1,4 +1,11 @@
-
+*{
+    padding: 0;
+    margin: 0;
+}
+main{
+    padding-top:6rem;
+    padding-bottom: 6rem;
+}
 .nav-drawer-overlay{
     position: fixed;
     width:20rem;
@@ -8,7 +15,18 @@
     transition: transform 0.5s ease-in-out;
     z-index: 1000;
 
+    .close-nav-drawer{
 
+        margin-bottom: 1rem;
+    }
+    
+    .nav-overlay-socials{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
 
     .nav-drawer{
         .nav-menu{
@@ -59,16 +77,8 @@
 }
 
 
-.close-nav-drawer{
-    position: absolute;
-    margin-bottom: 1rem;
-}
 
-.close-nav-drawer{
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-}
+
 
 .nav-menu, .subcat-list-item{
     display: flex;
@@ -81,10 +91,15 @@
 .front-header{
     display:flex;
     flex-direction: row;
+    position: fixed;
+    background:white;
+    top: 0;
+    width: 100%;
     justify-content: space-between;
-    height: 5rem;
+    height: 6rem;
     align-items: center;
-    
+    box-shadow: 0 0 5px grey;
+    z-index: 1000;
 
     .search-cart-div{
         display:flex;
@@ -129,3 +144,20 @@
     align-items: center;
     
 } 
+
+.nav-drawer-row-item{
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.close-nav-drawer{
+    position: absolute;
+    margin-bottom: 1rem;
+}
+
+.close-nav-drawer{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
