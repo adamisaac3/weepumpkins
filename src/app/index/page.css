@@ -74,8 +74,12 @@
                 justify-content: space-between;
                 gap: 1.5rem;
             }
-            .recent-info-middle, .recent-info-bottom{
-                gap: 15px;
+            .recent-info-middle{
+                gap: 10px;
+            }
+
+            .recent-info-bottom{
+                gap: 5px;
             }
 
             .view-all-events-button{
