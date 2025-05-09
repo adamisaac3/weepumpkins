@@ -109,7 +109,7 @@ export default function NewItemForm(){
 
                 <select name="subcategory" onChange={(e) => {
                     handleSubcategoryChange(parseInt(e.target.value))
-                }} required>
+                }}>
                     <option value="" hidden>Select Subcategory</option>
                     {subcategories &&
                         subcategories.map(s => {

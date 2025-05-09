@@ -11,7 +11,7 @@ export const config = {
 };
 
 function parseForm(req: NextApiRequest): Promise<{ fields: any; files: any }> {
-  const form = new IncomingForm({ multiples: true, maxFileSize: 10 * 1024 * 1024, allowEmptyFiles: true, minFileSize: 0 });
+  const form = new IncomingForm({ multiples: true, maxFileSize: 10 * 1024 * 1024 * 1024, allowEmptyFiles: true, minFileSize: 0 });
   return new Promise((resolve, reject) => {
     form.parse(req, (err, fields, files) => {
       if (err) reject(err);
@@ -40,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ({ data, error } = await db.rpc('insert_clothing', {
         p_name: fields.name[0],
         p_category: Number(fields.category[0]),
-        p_subcategory: Number(fields.subcategory[0]),
+        p_subcategory: fields.subcategory[0] === '' ? null : Number(fields.subcategory[0]),
         p_description: fields.description[0],
         p_dimensions: fields.dimensions[0],
         p_price: Number(fields.price),
@@ -55,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ({ data, error } = await db.rpc('insert_product', {
         p_name: fields.name[0],
         p_category: fields.category[0],
-        p_subcategory: fields.subcategory[0],
+        p_subcategory: fields.subcategory[0] === '' ? null : Number(fields.subcategory[0]),
         p_description: fields.description[0],
         p_dimensions: fields.dimensions[0],
         p_price: Number(fields.price),

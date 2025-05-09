@@ -3,6 +3,20 @@
     margin: 0;
 }
 
+@keyframes fadeIn{
+    from {
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+.fade-in{
+    animation-name: fadeIn;
+    animation-duration: 500ms;
+    animation-fill-mode:forwards;
+    animation-timing-function: ease-out;
+}
 .nav-button, .search-button, .cart-button{
     border: none;
 }
@@ -13,16 +27,23 @@ main{
 }
 .nav-drawer-overlay{
     position: fixed;
-    width:20rem;
+    width:23rem;
     height:100%;
     background-color:white;
-    transform: translateX(0);
-    transition: transform 0.5s ease-in-out;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
 
     .close-nav-drawer{
-
-        margin-bottom: 1rem;
+        flex: 0 0 auto;
+        align-self: flex-end;
+        margin: 1.5rem 1.5rem 0 0;
+        background: transparent;
+        border: none;
+        cursor:pointer;
     }
     
     .nav-overlay-socials{
@@ -35,6 +56,7 @@ main{
 
     .nav-drawer{
         .nav-menu{
+            padding: 0 16px;
             .nav-drawer-row-cat{
                 .nav-drawer-row-itemName-button{
                     width: 28px;
@@ -45,6 +67,13 @@ main{
 
                     background: transparent;
                     cursor: pointer;
+                    border: none;
+
+                    margin-bottom: 1rem;
+                    
+                    .button-clicked{
+                        transform: rotate(0.5turn);
+                    }
 
                     .nav-drawer-row-itemName-button-icon{
                         flex: 0 0 auto;
@@ -61,7 +90,13 @@ main{
     }
 }
 
+.nav-drawer-overlay.open{
+    transform: translateX(0);
+}
 
+.nav-drawer-overlay.closed{
+    transform: translateX(-100%);
+}
 .main-content-blurred{
     filter: blur(4px);
     pointer-events: none;
@@ -70,20 +105,15 @@ main{
 .nav-drawer-row-noc, .nav-drawer-row-cat{
     border-bottom: 2px solid black;
     width:100%;
-    padding: 1rem 0;
+    margin-bottom: 1rem;
     text-decoration: none;
     color: inherit;
-    width: 100%;
 }
 
 .nav-drawer-row-item{
     text-decoration: none;
     color: inherit;
 }
-
-
-
-
 
 .nav-menu, .subcat-list-item{
     display: flex;
@@ -156,16 +186,8 @@ main{
 }
 
 
-.close-nav-drawer{
-    position: absolute;
-    margin-bottom: 1rem;
-}
 
-.close-nav-drawer{
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-}
+
 
 .main-footer{
     padding-top: 5rem;
