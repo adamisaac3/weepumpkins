@@ -31,19 +31,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let data, error;
     let images;
-
-    if (fields.category[0] === 'Clothing') {
-
+    
+    if (fields.category[0] === '2') {
+      console.log('inside clothing category');
       images = [files.thumbnail[0], files.additional[0]];
       const imageNames = images.map((img: any) => img.originalFilename);
 
       ({ data, error } = await db.rpc('insert_clothing', {
         p_name: fields.name[0],
-        p_category: fields.category[0],
-        p_subcategory: fields.subcategory[0],
+        p_category: Number(fields.category[0]),
+        p_subcategory: Number(fields.subcategory[0]),
         p_description: fields.description[0],
         p_dimensions: fields.dimensions[0],
-        p_disclaimers: fields.disclaimers[0],
         p_price: Number(fields.price),
         p_images: imageNames,
       }));
@@ -59,7 +58,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         p_subcategory: fields.subcategory[0],
         p_description: fields.description[0],
         p_dimensions: fields.dimensions[0],
-        p_disclaimers: fields.disclaimers[0],
         p_price: Number(fields.price),
         p_thumbnail: thumbnailName,
         p_images: imageNames,
@@ -77,6 +75,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).json({ success: !error, data, error });
   } catch (err) {
-    return res.status(500).json({ error: 'Upload failed', detail: (err as Error).message });
+    return res.status(500).json({ error: 'Upload failed', detail: (err as Error).message, stack: (err as Error).stack});
   }
 }

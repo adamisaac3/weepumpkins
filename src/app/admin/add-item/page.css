@@ -1,0 +1,14 @@
+main{
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+
+    .item-form{
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        gap: 0.5rem;
+    }
+}

@@ -1,11 +1,6 @@
-
-.admin-addItem-form, .event-form{
+main{
     display: flex;
     flex-direction: column;
-    width: 50%;
-    gap: 1rem;
-
-    .description-input{
-        height: 60px;
-    }
+    gap: 0.5rem;
+    padding: 2rem 5rem;
 }

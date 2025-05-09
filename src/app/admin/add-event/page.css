@@ -1,0 +1,14 @@
+main{
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    .event-form{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
