@@ -1,5 +1,18 @@
+import Header from '../../components/Header'
+import Footer from '../../components/Footer'
+import BrowseAll from './BrowseAll'
 export default function Page(){
+    
+    
     return(
-        <h1>hello</h1>
+        <>
+            <Header />
+            
+            <main>
+                <BrowseAll />
+            </main>
+
+            <Footer />
+        </>
     )
 }
