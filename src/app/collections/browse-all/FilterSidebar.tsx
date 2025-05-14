@@ -1,5 +1,6 @@
 'use client'
 import {useState, useEffect} from 'react'
+import './page.css'
 
 export default function Component({filters, setFilters} : {filters: any, setFilters: (filters: any) => void}){
 
@@ -67,7 +68,10 @@ export default function Component({filters, setFilters} : {filters: any, setFilt
     }
 
     return (
-        <aside>
+        <aside className="filter-sidebar">
+
+            <h2>Filters</h2>
+
             <select onChange={(e) => handleCategoryChange(e.target.value)}>
                 <option value="">All Categories</option>
                 {categories && 
