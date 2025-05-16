@@ -4,13 +4,6 @@ import { notFound } from 'next/navigation';
 import './page.css'
 import PageShell from '@/app/components/category-item_dynamic/PageShell';
 
-type ItemPageProps = {
-    params: {
-        category: string,
-        item: string
-    }
-}
-
 
 export async function generateStaticParams(){
     
@@ -40,7 +33,7 @@ export async function generateStaticParams(){
     
 }
 
-export default async function Page( {params} : ItemPageProps){
+export default async function Page( {params} : {params: {category: string, item: string}}){
 
     const cleanItem = params.item && typeof (params.item) === 'string' ? params.item.replace(/[^a-zA-Z0-9\s-]/g, '') : null
     const cleanCat = params.category && typeof (params.category) === 'string' ? params.category.replace(/[^a-zA-Z0-9\s-]/g, '') : null
