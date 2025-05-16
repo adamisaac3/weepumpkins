@@ -22,13 +22,14 @@ export async function generateStaticParams(){
     }
 }
 
-type CategoryPageProps = {
-    params: {
-        category: string
-    }
-}
+type CategoryPageProps = Promise<{
+    category: string
+}>
 
-export default async function Page({params}: CategoryPageProps){
+export default async function Page({params}: {params: CategoryPageProps}){
+    const awaited = await params;
+    const {category} = awaited
+    
     const db = await createAdminClient();
 
     const {data: categories, error} = await db.from('category').select('name');
@@ -36,11 +37,9 @@ export default async function Page({params}: CategoryPageProps){
     if(!error && categories){
         const valid = categories.map((c: {name: string}) => c.name.replace(' ', '-').toLowerCase()) || []
         
-        if(!valid.includes(params.category)){
+        if(!valid.includes(category)){
             notFound();
         }   
-
-        const category = params.category;
 
         return (
             <>
