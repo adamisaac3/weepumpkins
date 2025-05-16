@@ -1,6 +1,5 @@
 'use client'
 import {useState, useEffect} from 'react'
-import './page.css'
 
 export default function Component({filters, setFilters} : {filters: any, setFilters: (filters: any) => void}){
 
