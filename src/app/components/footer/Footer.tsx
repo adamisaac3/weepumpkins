@@ -1,7 +1,7 @@
 'use client'
 import {useState, JSX} from 'react'
 
-export default function Footer(){
+export default function Footer({navOpen} : {navOpen: boolean}){
 
     const [product, setProduct] = useState(false);
     const [returns, setReturns] = useState(false);
@@ -17,7 +17,7 @@ export default function Footer(){
 
 
     return (
-        <footer className="main-footer">
+        <footer className={`main-footer ${navOpen ? 'main-content-blurred' : ''}`}>
             <h2>Products and Procedures</h2>
             <div className="footer-div">
                 <div className="footer-policy">

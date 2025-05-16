@@ -1,6 +1,6 @@
 'use client'
 import {useState, useEffect} from 'react'
-import SwappableImage from '../../components/SwappableImage'
+import SwappableImage from '../multi-use/SwappableImage'
 
 
 export default function Component({filters} : {filters: { category: string, subcategory: string, minPrice: string, maxPrice: string }}){

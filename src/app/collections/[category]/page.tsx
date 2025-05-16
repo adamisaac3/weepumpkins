@@ -1,6 +1,5 @@
 import {createAdminClient} from '../../../../utils/supabase/server'
-import Header from '../../components/Header'
-import CategoryPage from '../../components/CategoryPage'
+import PageShell from '@/app/components/category_dynamic/PageShell';
 import { notFound } from 'next/navigation';
 
 export async function generateStaticParams(){
@@ -9,8 +8,8 @@ export async function generateStaticParams(){
         const {data: categories} = await db.from('category').select('name');
         
         if(categories){
-            return categories.map((c: any) => ({
-                category: c.name.replace(' ', '-'),
+            return categories.map((c: {name: string}) => ({
+                category: c.name.replace(' ', '-').toLowerCase(),
             }));
         }
         else{
@@ -19,27 +18,30 @@ export async function generateStaticParams(){
     }
     catch(err){
         console.error('Error fetching categories:', err);
+        return [];
     }
 }
 
 export default async function Page({params}: {params: {category: string}}){
     const db = await createAdminClient();
 
-    const {data: categories} = await db.from('category').select('name');
+    const {data: categories, error} = await db.from('category').select('name');
 
-    const valid = categories?.map((c: any) => c.name.replace(' ', '-')) || []
+    if(!error && categories){
+        const valid = categories.map((c: {name: string}) => c.name.replace(' ', '-').toLowerCase()) || []
+        
+        if(!valid.includes(params.category)){
+            notFound();
+        }   
 
-    if(!valid.includes(params.category)){
-        notFound();
+        const category = params.category;
+
+        return (
+            <>
+                <PageShell category={category}/>
+            </>
+        )
     }
 
-    const category = params.category;
-
-    return (
-        <main>
-            <Header />
-            <CategoryPage category={category} />
-            <h1>{category}</h1>
-        </main>
-    )
+    notFound();
 }

@@ -2,8 +2,9 @@
 import {useEffect, useState} from 'react'
 
 export default function Component({category} : {category: string}){
-    const [items, setItems] = useState([])
-    const [images, setImages] = useState([])
+    type Item = Record<number, {product_name: string, price: number, category_name: string, subcategory_name: string, thumbnail: string, alts: string[], item_count: number}>
+    
+    const [items, setItems] = useState<Item>();
 
     useEffect(() => {
         const getItems = async () => {
@@ -13,8 +14,9 @@ export default function Component({category} : {category: string}){
                 const {data, images} = await response.json();
 
                 if(response.ok){
-                    setItems(data);
-                    setImages(images);
+                    
+
+
                 }
             }
             catch(err){

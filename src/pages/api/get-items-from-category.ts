@@ -13,8 +13,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             queryable = category.replace('-', ' ')
         }
 
-        const cleanCategory = queryable.replace(/[^a-zA-Z0-9\s-]/g, '');
-        console.log(cleanCategory);
+        const cleanCategory = queryable.replace(/[^a-zA-Z0-9\s-]/g, '').split('-');
+        const cleanQuery = cleanCategory.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+
         const db = await createAdminClient();
 
         const {data, error} = await db.rpc('get_items_from_category', {req_category: cleanCategory})
@@ -24,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const ids = data.map((row: any) => row.id)
             
             const images = await db.from('product_images').select('product_id, image_path, image_type').in('product_id', ids)
-
+            
             return res.status(200).json({data: data, images: images});
 
         }

@@ -1,11 +1,8 @@
 import {createAdminClient} from '../../../../../utils/supabase/server'
 import { notFound } from 'next/navigation';
-import Header from '../../../components/Header'
-import Footer from '../../../components/Footer'
-import ImageDiv from './ImageDiv'
-import ItemDescriptionDiv from './ItemDescriptionDiv'
-import Recommendations from './Recommendations'
+
 import './page.css'
+import PageShell from '@/app/components/category-item_dynamic/PageShell';
 
 export async function generateStaticParams(){
     
@@ -91,15 +88,7 @@ export default async function Page( {params} : {params: {category: string, item:
     
     return (
         <>
-            <Header />
-            <main>
-                <ImageDiv thumbnail={thumbnail} altImages={alts} category={itemData.categoryid}/>
-                <ItemDescriptionDiv item={itemData} />
-            </main>
-            <aside>
-                <Recommendations category={itemData.category_id} id={itemData.id} />
-            </aside>
-            <Footer />
+            <PageShell item={itemData} alts={alts} thumbnail={thumbnail} />
         </>
     )
 
