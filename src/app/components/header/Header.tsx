@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, Dispatch, SetStateAction, useRef } from "react";
+import { useState, useEffect, Dispatch, SetStateAction, useRef , useCallback} from "react";
 import NavDrawerRow from './NavDrawerRow'
 import { AnimatePresence, motion } from "framer-motion";
 import Image from 'next/image'
@@ -10,7 +10,7 @@ export default function Header({navOpen, setNavOpen} : {navOpen: boolean, setNav
     type Items = Record<number, {category_name: string, category_url: string, subcategories: string[]}>
     const [items, setItems] = useState<Items>();
     const [socialsDelay, setSocialsDelay] = useState<number>(1);
-    const handleNavClicked = () => setNavOpen(!navOpen);
+    const handleNavClicked = useCallback(() => setNavOpen((open) => !open), [setNavOpen]);
     const drawerRef = useRef<HTMLDivElement>(null);
 
 

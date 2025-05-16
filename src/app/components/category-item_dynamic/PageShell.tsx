@@ -6,7 +6,7 @@ import ItemDescriptionDiv from './ItemDescriptionDiv'
 import Recommendations from './Recommendations'
 import {useState} from 'react'
 
-export default function PageShell({item, thumbnail, alts} : {item: any, thumbnail: string, alts: string[]}){
+export default function PageShell({item, thumbnail, alts} : {item: {productid: number, productname: string, categoryid: number, subcategoryid: number, description: string, price: number, dimensions: string, categoryname: string, subcategoryname: string, itemcount: number}, thumbnail: string, alts: string[]}){
 
     const [navOpen, setNavOpen] = useState<boolean>(false)
 
@@ -18,7 +18,7 @@ export default function PageShell({item, thumbnail, alts} : {item: any, thumbnai
                     <ItemDescriptionDiv item={item} />
                 </main>
                 <aside className={`${navOpen ? "main-content-blurred" : ''}`}>
-                    <Recommendations category={item.category_id} id={item.id} />
+                    <Recommendations category={item.categoryid} id={item.productid} />
                 </aside >
                 <Footer navOpen={navOpen}/>
             </>

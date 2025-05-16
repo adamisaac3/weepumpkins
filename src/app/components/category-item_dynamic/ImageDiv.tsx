@@ -1,20 +1,19 @@
 'use client'
-import {useState, useEffect, useRef} from 'react'
+import {useState, useEffect} from 'react'
 import Image from 'next/image';
 import {motion, AnimatePresence} from 'framer-motion'
 
 
-export default function Component({thumbnail, altImages, category} : {thumbnail: string, altImages: string[], category: string}){
+export default function Component({thumbnail, altImages, category} : {thumbnail: string, altImages: string[], category: number}){
     //374 by 500 image size 
     //thumbnails are 76 by 101 
     const [image, setImage] = useState<string>(thumbnail)
     const [images, setImages] = useState<string[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState<1 | -1>(-1);
-    const isFirstRender = useRef(true);
 
     useEffect(() => {
-        let imageArr: string[] = [thumbnail, ...altImages]
+        const imageArr: string[] = [thumbnail, ...altImages]
     
         setImages(imageArr);
     }, [thumbnail, altImages])

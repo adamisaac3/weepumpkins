@@ -8,17 +8,16 @@ export default function NavDrawerRow({itemName, rowNum, hasCategories, subcatego
         const [subcats, setSubcats] = useState<{subcategory: string, subcat_url: string}[]>()
     
 
-        if(hasCategories){
-            useEffect(() => {
-                const properCats: {subcategory: string, subcat_url: string}[] = subcategories.map((sc: string) => {
-                    const url = sc.replace(' ', '-').toLowerCase();
+        useEffect(() => {
+            const properCats: {subcategory: string, subcat_url: string}[] = subcategories.map((sc: string) => {
+                const url = sc.replace(' ', '-').toLowerCase();
 
-                    return {subcategory: sc, subcat_url: `/collections/${url}`}
-                })
+                return {subcategory: sc, subcat_url: `/collections/${url}`}
+            })
 
-                setSubcats(properCats);
-            }, [subcategories])    
-        }
+            setSubcats(properCats);
+        }, [subcategories])    
+        
         
         return(
             <>

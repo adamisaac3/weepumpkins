@@ -1,3 +1,4 @@
+import Image from "next/image";
 export default function FavoriteContainer({itemName, imageLink} : {itemName: string, imageLink: string}){
     const url = itemName.replace(' ', '-').toLowerCase();
     
@@ -5,7 +6,7 @@ export default function FavoriteContainer({itemName, imageLink} : {itemName: str
         <>
             <div className="favorite-div">
                 <a href={`/collections/${url}`} className="favorite-anchor">
-                    <img src={imageLink} width={250} height={250} className="favorite-image"/>
+                    <Image src={imageLink} width={250} height={250} className="favorite-image" alt="Image of favorite collections"/>
                     <span className="favorite-item">{itemName}</span>
                 </a>
             </div>

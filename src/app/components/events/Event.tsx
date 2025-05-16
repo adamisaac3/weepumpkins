@@ -1,10 +1,12 @@
+import Image from "next/image"
+
 
 export default function Event({name, address, city, state, event_url, start_date, end_date, start_time, end_time, booth, thumbnail} 
     :          {name: string, address: string, city: string, state: string, event_url: string, start_date: string, end_date: string, start_time: string, end_time: string, booth: string, thumbnail: string})
     {
         return (
             <div className="event-div">
-                <img className="event-thumbnail" width={100} height={100} src={`https://jejfpctlmwnzbjejiljo.supabase.co/storage/v1/object/public/files/Events/${thumbnail}`} alt="Recent Event Thumbnail" />
+                <Image className="event-thumbnail" width={100} height={100} src={`https://jejfpctlmwnzbjejiljo.supabase.co/storage/v1/object/public/files/Events/${thumbnail}`} alt="Recent Event Thumbnail" />
                 <div className="event-info">
                     <div className="event-info-top">
                         <a href={event_url}>

@@ -1,5 +1,4 @@
 'use client'
-import {useState, useEffect} from 'react'
 import DisclaimerButton from './DisclaimerButton'
 
 function hasDecimal(num: number){

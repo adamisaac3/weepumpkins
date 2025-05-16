@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import {IncomingForm} from 'formidable';
+import {Fields, Files, IncomingForm} from 'formidable';
 import { createAdminClient } from '@/../utils/supabase/server'
 
 import fs from 'fs';
@@ -10,14 +10,14 @@ export const config = {
   },
 };
 
-function parseForm(req: NextApiRequest): Promise<{ fields: any; files: any }> {
-  const form = new IncomingForm({ multiples: true, maxFileSize: 10 * 1024 * 1024 * 1024, allowEmptyFiles: true, minFileSize: 0 });
-  return new Promise((resolve, reject) => {
-    form.parse(req, (err, fields, files) => {
-      if (err) reject(err);
-      else resolve({ fields, files });
+function parseForm(req: NextApiRequest): Promise<{ fields: Fields; files: Files }> {
+    const form = new IncomingForm({ multiples: true, maxFileSize: 10 * 1024 * 1024 * 1024, allowEmptyFiles: true, minFileSize: 0 });
+    return new Promise((resolve, reject) => {
+        form.parse(req, (err, fields, files) => {
+          if (err) reject(err);
+          else resolve({ fields, files });
+        });
     });
-  });
 }
   
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -30,40 +30,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const db = await createAdminClient();
 
     let data, error;
-    let images;
-    
-    if (fields.category[0] === '2') {
-      console.log('inside clothing category');
-      images = [files.thumbnail[0], files.additional[0]];
-      const imageNames = images.map((img: any) => img.originalFilename);
+    let images: Array<import('formidable').File> = [];
+
+    const getField = (field: string | string[] | undefined) => Array.isArray(field) ? field[0] : field;
+
+    const category = getField(fields.category);
+    const subcategory = getField(fields.subcategory);
+    const name = getField(fields.name);
+    const description = getField(fields.description);
+    const dimensions = getField(fields.dimensions);
+    const price = Number(getField(fields.price));
+
+    if (category === '2') {
+      images = [
+        ...(Array.isArray(files.thumbnail) ? [files.thumbnail[0]] : []),
+        ...(Array.isArray(files.additional) ? [files.additional[0]] : [])
+      ];
+      const imageNames = images.map((img) => img.originalFilename);
 
       ({ data, error } = await db.rpc('insert_clothing', {
-        p_name: fields.name[0],
-        p_category: Number(fields.category[0]),
-        p_subcategory: fields.subcategory[0] === '' ? null : Number(fields.subcategory[0]),
-        p_description: fields.description[0],
-        p_dimensions: fields.dimensions[0],
-        p_price: Number(fields.price),
+        p_name: name,
+        p_category: Number(category),
+        p_subcategory: subcategory === '' ? null : Number(subcategory),
+        p_description: description,
+        p_dimensions: dimensions,
+        p_price: price,
         p_images: imageNames,
       }));
     } else {
-
+      // Other categories
       images = Array.isArray(files.additional) ? files.additional : [];
-      const thumbnailName = files.thumbnail[0].originalFilename;
-      const imageNames = images.map((img: any) => img.originalFilename);
+      const thumbnail = Array.isArray(files.thumbnail) ? files.thumbnail[0] : files.thumbnail;
+      const thumbnailName = thumbnail?.originalFilename;
+      const imageNames = images.map((img) => img.originalFilename);
 
       ({ data, error } = await db.rpc('insert_product', {
-        p_name: fields.name[0],
-        p_category: fields.category[0],
-        p_subcategory: fields.subcategory[0] === '' ? null : Number(fields.subcategory[0]),
-        p_description: fields.description[0],
-        p_dimensions: fields.dimensions[0],
-        p_price: Number(fields.price),
+        p_name: name,
+        p_category: category,
+        p_subcategory: subcategory === '' ? null : Number(subcategory),
+        p_description: description,
+        p_dimensions: dimensions,
+        p_price: price,
         p_thumbnail: thumbnailName,
         p_images: imageNames,
       }));
 
-      images.push(files.thumbnail[0]);
+      if (thumbnail) images.push(thumbnail);
     }
 
     if (!error) {

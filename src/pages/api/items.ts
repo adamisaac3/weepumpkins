@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
         if(!error){
-            const ids = data.map((row: any) => row.id)
+            const ids = data.map((row: {id: number}) => row.id)
             const {data: images, error: imagesError} = await db.from('product_images').select('product_id, image_path, image_type').in('product_id', ids)
 
             if(!imagesError){

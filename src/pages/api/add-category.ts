@@ -1,19 +1,19 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import { createAdminClient } from '../../../utils/supabase/server'
 import { IncomingForm } from 'formidable'
+import type { Fields, Files } from 'formidable';
 
-function parseForm(req: NextApiRequest): Promise<{fields:any, files:any}>{
+function parseForm(req: NextApiRequest): Promise<{fields: Fields, files: Files}> {
     const form = new IncomingForm();
     return new Promise((resolve, reject) => {
-        form.parse(req, (err, fields, files) =>{
-            if(err){
-                reject(err)
+        form.parse(req, (err, fields, files) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve({ fields, files });
             }
-            else{
-                resolve({fields, files});
-            }
-        })
-    })
+        });
+    });
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
@@ -24,10 +24,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try{
         const db = await createAdminClient();
     
-        const {fields, files} = await parseForm(req);
-    
-        const{data, error} = await db.from('category').insert({
-            name: fields['category'][0]
+        const {fields} = await parseForm(req);
+        
+        const categoryField = fields['category'];
+        const categoryName = Array.isArray(categoryField) ? categoryField[0] : categoryField;
+        if (!categoryName) {
+            return res.status(400).json({ error: 'Category name is required.' });
+        }
+        const { data, error } = await db.from('category').insert({
+            name: categoryName
         })
 
         if(!error){

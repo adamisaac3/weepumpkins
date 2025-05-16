@@ -1,11 +1,13 @@
 'use client'
+
 import {useState, useEffect} from 'react'
+import Image from 'next/image';
 
 export default function NewArrivalsContainer(){
-    const [products, setProducts] = useState<any[] | null>(null);
-    const [images, setImages] = useState<any[] | null>(null);
-    const [errors, setErrors] = useState<string | null>(null);
-    const [displayProducts, setDisplayProducts] = useState<any[] | null>(null);
+    const [products, setProducts] = useState<{id: number, product_name: string, category_id: number, subcategory_id: number, description: string, price: number, dimensions: string, category_name: string, subcategory_name: string}[]>();
+    const [images, setImages] = useState<{product_id: number, image_path: string, image_type: string}[] | null>(null);
+    const [errors, setErrors] = useState<string>();
+    const [displayProducts, setDisplayProducts] = useState<{id: number, product_name: string, category_id: number, subcategory_id: number, description: string, price: number, dimensions: string, category_name: string, subcategory_name: string, thumbnail: string}[]>();
 
 
     
@@ -26,6 +28,7 @@ export default function NewArrivalsContainer(){
                 } 
             }
             catch(err){
+                console.log(err);
                 setErrors("Something went wrong");
             }
         };
@@ -44,7 +47,7 @@ export default function NewArrivalsContainer(){
 
                 return {
                     ...item,
-                    thumbnail: thumb ? thumb[1] : null,
+                    thumbnail: String(thumb ? thumb[1] : ""),
                 };
             });
 
@@ -67,7 +70,7 @@ export default function NewArrivalsContainer(){
                 {displayProducts && displayProducts.map(p => {
                     return(
                         <div key={p.id} className="recent-item">
-                            <img width={250} height={250} className="recent-item-image" src={`https://jejfpctlmwnzbjejiljo.supabase.co/storage/v1/object/public/files/${p.category_id}/${p.thumbnail}`}/>
+                            <Image alt="recent item image" width={250} height={250} className="recent-item-image" src={`https://jejfpctlmwnzbjejiljo.supabase.co/storage/v1/object/public/files/${p.category_id}/${p.thumbnail}`}/>
                             <div className="arrival-name-category-div">
                                 <p className="new-arrival-name">{p.product_name}</p>
                                 <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

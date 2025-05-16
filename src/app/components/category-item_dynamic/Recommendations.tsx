@@ -1,13 +1,13 @@
 'use client'
 import {useEffect, useState} from 'react'
-import { arrayBuffer } from 'stream/consumers';
 import SwappableImage from '../multi-use/SwappableImage'
 
-export default function Component({category, id}: {category: string, id: number}){
+export default function Component({category, id}: {category: number, id: number}){
     /*Right now it just gets the recent items. Obviously this needs to be changed in the future. */
 
-    const [items, setItems] = useState<any>([]);
-
+    const [items, setItems] = useState<{id: number, product_name: string, category_id: number, subcategory_id: number, description: string, price: number, dimensions: string, category_name: string, subcategory_name: string, thumbnail:string, altImages: string[]}[]>([]);
+    console.log(category)
+    console.log(id);
     useEffect(() => {
         const fetchItems = async () => {
             const response = await fetch('/api/get-recent-items');
@@ -54,7 +54,7 @@ export default function Component({category, id}: {category: string, id: number}
             <h2 className="recommendations-header">YOU MAY ALSO LOVE THESE</h2>
             <div className="recommendations-items">
                 {items && 
-                    items.map((item: {id: number, product_name: string, category_id: number, subcategory_id: number, description: string, price: number, dimensions: string, category_name: string, subcategory_name: string, thumbnail: string, altImages: string[]}) => {
+                    items.map((item) => {
                         return (
                             <div key={item.id} className="recommendations-item">
                                 <SwappableImage thumbnail={item.thumbnail} alt={item.altImages[0]} category={item.category_id}/>

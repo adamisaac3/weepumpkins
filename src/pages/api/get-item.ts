@@ -8,8 +8,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-        let cleanCat = req.query.category && typeof (req.query.category) === 'string' ? req.query.category.replace(/[^a-zA-Z0-9\s-]/g, '') : null
-        let cleanItem = req.query.item && typeof (req.query.item) === 'string' ? req.query.item.replace(/[^a-zA-Z0-9\s-]/g, '') : null
+        const cleanCat = req.query.category && typeof (req.query.category) === 'string' ? req.query.category.replace(/[^a-zA-Z0-9\s-]/g, '') : null
+        const cleanItem = req.query.item && typeof (req.query.item) === 'string' ? req.query.item.replace(/[^a-zA-Z0-9\s-]/g, '') : null
 
 
         if (cleanCat && cleanItem) {

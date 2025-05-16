@@ -1,5 +1,5 @@
 'use client'
-import {useState, JSX} from 'react'
+import {useState} from 'react'
 
 export default function Footer({navOpen} : {navOpen: boolean}){
 

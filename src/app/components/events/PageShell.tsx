@@ -16,13 +16,13 @@ export default function EventPageShell() {
     useEffect(() => {
         const fetchEvents = async () => {
             const response = await fetch('/api/get-all-events');
-            const events = await response.json();
+            const events: {id: number, name: string, address: string, state: string, start_date: string, end_date: string, start_time: string, end_time: string, thumbnail: string, booth: string, city: string, event_url: string}[] = await response.json();
             console.log(events);
 
             if (response.ok) {
                 setPast(
-                    events.filter((e: any) => Date.parse(e.end_date) < Date.now())
-                        .map((e: any) => ({
+                    events.filter((e) => Date.parse(e.end_date) < Date.now())
+                        .map((e) => ({
                             ...e,
                             start_date: format(e.start_date, 'MMMM do'),
                             end_date: format(e.end_date, 'MMMM do yyyy'),
@@ -32,8 +32,8 @@ export default function EventPageShell() {
                 );
 
                 setFuture(
-                    events.filter((e: any) => Date.parse(e.end_date) >= Date.now())
-                        .map((e: any) => ({
+                    events.filter((e) => Date.parse(e.end_date) >= Date.now())
+                        .map((e) => ({
                             ...e,
                             start_date: format(e.start_date, 'MMMM do'),
                             end_date: format(e.end_date, 'MMMM do yyyy'),
@@ -65,7 +65,7 @@ export default function EventPageShell() {
                 <div className="past-events-div">
                     <h2 className="event-headers">Past Events</h2>
                     {past &&
-                        past.map((e, i) => {
+                        past.map((e) => {
                             return (
                                 <Event key={e.id} thumbnail={e.thumbnail} name={e.name} address={e.address} city={e.city} state={e.state} event_url={e.event_url} start_date={e.start_date} end_date={e.end_date} start_time={e.start_time} end_time={e.end_time} booth={e.booth} />
                             )

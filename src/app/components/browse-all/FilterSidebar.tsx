@@ -1,12 +1,13 @@
 'use client'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, Dispatch} from 'react'
 
-export default function Component({filters, setFilters} : {filters: any, setFilters: (filters: any) => void}){
+export default function Component({filters, setFilters} : {filters: {category: string, subcategory: string, minPrice: string, maxPrice: string}, setFilters: Dispatch<React.SetStateAction<{category: string, subcategory: string, minPrice: string, maxPrice: string}>>}){
 
-    const [categoryMap, setCategoryMap] = useState<Record<string, any> | null>(null)
-    const [categories, setCategories] = useState<any>([]);
-    const [selectedCategory, setSelectedCategory] = useState<string>();
-    const [subcategories, setSubcategories] = useState<any>([]);
+    type Category = {cat_id: number, subcats: {subcat_id: number, subcat_name: string}[]}
+
+    const [categoryMap, setCategoryMap] = useState<Record<string, Category>>()
+    const [categories, setCategories] = useState<{cat_name: string, cat_id: number}[]>([]);
+    const [subcategories, setSubcategories] = useState<{subcat_id: number, subcat_name: string}[]>();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -14,28 +15,27 @@ export default function Component({filters, setFilters} : {filters: any, setFilt
             const data = await response.json();
 
             if(response.ok){
-                let categories: Record<string, any> = {}
-                let cats: Array<{categoryname: string, categoryid: number}> = []
-                data.forEach((row:any) => {
-                    const {categoryname, subcategoryname, categoryid, subcategoryid} = row
+                const categories: Record<string, Category> = {}
+                const cats: Array<{cat_name: string, cat_id: number}> = []
+                data.forEach((row: {categoryname: string, subcategoryname: string, categoryid: number, subcategoryid: number}) => {
 
-                    if(!categories[categoryname]){
-                        categories[categoryname] = {
-                            categoryid,
-                            subcategories: []
+                    if(!categories[row.categoryname]){
+                        categories[row.categoryname] = {
+                            cat_id: row.categoryid,
+                            subcats: []
                         }
 
-                        if(subcategoryid){
-                            categories[categoryname].subcategories.push({
-                                subcategoryid,
-                                subcategoryname
+                        if(row.subcategoryid){
+                            categories[row.categoryname].subcats.push({
+                                subcat_id: row.subcategoryid,
+                                subcat_name: row.subcategoryname
                             })
                         }
 
-                        cats.push({categoryname, categoryid});
+                        cats.push({cat_name: row.categoryname, cat_id: row.categoryid});
                     }
-                    else if(subcategoryid){
-                        categories[categoryname].subcategories.push({subcategoryid, subcategoryname});
+                    else if(row.subcategoryid){
+                        categories[row.categoryname].subcats.push({subcat_id: row.subcategoryid, subcat_name: row.subcategoryname});
                     }
                 })
 
@@ -49,13 +49,11 @@ export default function Component({filters, setFilters} : {filters: any, setFilt
 
 
     function handleCategoryChange(select: string){
-        if(categoryMap)
-            setSelectedCategory(select)
-
+        
         setFilters({...filters, category: select})
 
-        if(categoryMap && categoryMap[select].subcategories){
-            setSubcategories(categoryMap[select].subcategories)
+        if(categoryMap && categoryMap[select].subcats){
+            setSubcategories(categoryMap[select].subcats)
         }
         else{
             setSubcategories([]);
@@ -74,9 +72,9 @@ export default function Component({filters, setFilters} : {filters: any, setFilt
             <select onChange={(e) => handleCategoryChange(e.target.value)}>
                 <option value="">All Categories</option>
                 {categories && 
-                    categories.map((c: any) => {
+                    categories.map((c) => {
                         return(
-                            <option key={c.categoryid} value={c.categoryname}>{c.categoryname}</option>
+                            <option key={c.cat_id} value={c.cat_name}>{c.cat_name}</option>
                         )
                     })
                 }
@@ -85,9 +83,9 @@ export default function Component({filters, setFilters} : {filters: any, setFilt
             <select onChange={(e) => handleSubcategoryChange(e.target.value)}>
                 <option value="">All Subcategories</option>
                 {subcategories && 
-                    subcategories.map((s: any) => {
+                    subcategories.map((s) => {
                         return (
-                            <option key={s.subcategoryid} value={s.subcategoryname}>{s.subcategoryname}</option>
+                            <option key={s.subcat_id} value={s.subcat_name}>{s.subcat_name}</option>
                         )
                     })
                 }
