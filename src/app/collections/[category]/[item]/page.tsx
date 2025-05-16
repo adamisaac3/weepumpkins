@@ -20,7 +20,7 @@ export async function generateStaticParams(){
 
                 const item = sanitizedProductName + `-${i.id}`
                 
-                return { params : {category: urlCategory, item: item}}
+                return {category: urlCategory, item: item}
             })
         }
         return [];
