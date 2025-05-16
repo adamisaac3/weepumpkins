@@ -10,8 +10,8 @@ export default function EventPageShell() {
 
 
     const [navOpen, setNavOpen] = useState(false);
-    const [past, setPast] = useState<any[] | null>(null);
-    const [future, setFuture] = useState<any[] | null>(null);
+    const [past, setPast] = useState<{id: number, name: string, address: string, state: string, start_date: string, end_date: string, start_time: string, end_time: string, thumbnail: string, booth: string, city: string, event_url: string}[]>();
+    const [future, setFuture] = useState<{id: number, name: string, address: string, state: string, start_date: string, end_date: string, start_time: string, end_time: string, thumbnail: string, booth: string, city: string, event_url: string}[]>();
 
     useEffect(() => {
         const fetchEvents = async () => {

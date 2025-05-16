@@ -3,7 +3,7 @@ import { updateSession } from '../utils/supabase/middleware'
 export async function middleware(request: NextRequest) {
   const res = NextResponse.next()
 
-  const {supabase: sb, supabaseResponse: response, user} = await updateSession(request)
+  const {user} = await updateSession(request)
   
   
   if(request.nextUrl.pathname.startsWith('/admin') && (!user)){

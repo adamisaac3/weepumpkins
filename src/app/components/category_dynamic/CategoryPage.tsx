@@ -1,8 +1,8 @@
 'use client'
-import {useEffect, useState} from 'react'
+//import {useEffect, useState} from 'react'
 
 export default function Component({category} : {category: string}){
-    type Item = Record<number, {product_name: string, price: number, category_name: string, subcategory_name: string, thumbnail: string, alts: string[], item_count: number}>
+    //type Item = Record<number, {product_name: string, price: number, category_name: string, subcategory_name: string, thumbnail: string, alts: string[], item_count: number}>
     /*
     const [items, setItems] = useState<Item>();
 
