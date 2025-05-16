@@ -22,13 +22,13 @@ export async function generateStaticParams(){
     }
 }
 
-type PageProps = {
+type CategoryPageProps = {
     params: {
         category: string
     }
 }
 
-export default async function Page({params}: PageProps){
+export default async function Page({params}: CategoryPageProps){
     const db = await createAdminClient();
 
     const {data: categories, error} = await db.from('category').select('name');
