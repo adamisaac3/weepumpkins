@@ -1,7 +1,7 @@
 'use client'
 import {useEffect, useState} from 'react'
 import { arrayBuffer } from 'stream/consumers';
-import SwappableImage from '../../../components/multi-use/SwappableImage'
+import SwappableImage from '../multi-use/SwappableImage'
 
 export default function Component({category, id}: {category: string, id: number}){
     /*Right now it just gets the recent items. Obviously this needs to be changed in the future. */
