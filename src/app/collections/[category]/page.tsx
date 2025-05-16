@@ -9,7 +9,7 @@ export async function generateStaticParams(){
         
         if(categories){
             return categories.map((c: {name: string}) => ({
-                category: c.name.replace(' ', '-').toLowerCase(),
+                params : {category: c.name.replace(' ', '-').toLowerCase()},
             }));
         }
         else{

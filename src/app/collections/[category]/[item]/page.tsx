@@ -21,13 +21,13 @@ export async function generateStaticParams(){
         const {data: items, error} = await db.rpc('get_all_items')
 
         if (!error && items) {
-            return items.map((i: {id: number, product_name: string, category_id: number, subcategory_id: number, description: string, price: number, dimensions: string, category_name: string, subcategory_name: string}) => {
+            return items.map((i: {id: number, product_name: string, category_name: string}) => {
                 const sanitizedProductName = i.product_name.replace(/[:\/_<>\s]/g, '-').toLowerCase();
                 const urlCategory = i.category_name.replace(' ', '-').toLowerCase();
 
                 const item = sanitizedProductName + `-${i.id}`
                 
-                return { category: urlCategory, item: item}
+                return { params : {category: urlCategory, item: item}}
             })
         }
         return [];
