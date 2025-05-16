@@ -4,7 +4,10 @@ import { notFound } from 'next/navigation';
 import './page.css'
 import PageShell from '@/app/components/category-item_dynamic/PageShell';
 
-type MySafePageProps = {params: {category: string, item: string}}
+type MySafePageProps = {
+    params: {category: string, item: string}
+    searchParams: { [key: string]: string | string[] | undefined }
+}
 
 export async function generateStaticParams(){
     
