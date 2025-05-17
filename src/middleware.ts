@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
   const {user} = await updateSession(request)
   
   
-  if(request.nextUrl.pathname.startsWith('/admin') && (!user)){
+  if(request.nextUrl.pathname.startsWith('/admin') && (user && user.is_anonymous)){
       return NextResponse.redirect(new URL('/login', request.url))
     }
 
