@@ -1,4 +1,3 @@
-'use server'
 import { createClient } from "../../../../utils/supabase/server";
 import {NextResponse} from 'next/server'
 
@@ -37,7 +36,7 @@ export async function AddItemHandler(product_id: number){
     })
 
     if(addItemError){
-        console.log("failed to add item " + addItemError)
+        console.log("failed to add item " + addItemError.message)
     }
     else{
         return NextResponse.json({status: 'ok'})

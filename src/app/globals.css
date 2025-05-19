@@ -4,6 +4,163 @@
     font-family: 'Asul', sans-serif
 }
 
+.cart-overlay.open{
+    transition: transform 0.4s ease-in-out;
+    position: fixed;
+    transform: translateX(0);
+}
+
+.cart-overlay.closed{
+    transition: transform 0.4s ease-in-out;
+    position: fixed;
+    transform: translateX(100%);
+}
+
+.cart-overlay.open, .cart-overlay.closed{
+    position: fixed;
+    z-index: 1000;
+    width: 27.5rem;
+    height: 100vh;
+    background-color: white;
+    top: 0;
+    right: 0;
+
+    .cart-overlay-top-row{
+        display: flex;
+        flex-direction: row;
+        padding: 1rem 0 1.5rem 0;
+        margin: 0 2rem 0 2rem;
+        border-bottom: 1px solid grey;
+        justify-content: space-between;
+        align-items: center;
+
+        .cart-header{
+            letter-spacing: 0.1rem;
+        }
+
+        .close-cart-overlay{
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+    }
+
+
+    .cart-items{
+        margin: 0 2rem 0 2rem;
+        padding-top: 2.5rem;
+        padding-bottom: 1rem;
+        max-width: 400px;
+        max-height: 190px;
+        overflow-y: auto;
+        border-bottom: 1px solid grey;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+
+        .cart-item{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1.5rem;
+            padding-right: 2.5rem;
+
+            .cart-item-image{
+                object-fit: cover;
+            }
+
+            .cart-item-info{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                gap: 7px;
+                
+                .cart-item-name, .cart-item-cat-name{
+                    letter-spacing: 0.05rem;
+                }
+
+                .cart-item-name{
+                    font-size: 20px;
+                }
+
+                .cart-item-cat-name{
+                    font-size: 16px;
+                }
+
+                .quantity-and-price{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+
+                    .quantity{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 7px;
+                        border: 1px solid black;
+                        
+                        .minus-quantity, .plus-quantity{
+                            display: flex;
+                            align-items: center;
+                            padding: 7px;
+                            border: none;
+                            background: transparent;
+                            cursor: pointer;
+                            transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+                            opacity: 0.8;
+                        }
+
+                        .minus-quantity:hover, .plus-quantity:hover{
+                            background-color: black;
+                            opacity: 1;
+                        }
+
+                        .minus-quantity:hover .minus-quantity-icon, .plus-quantity:hover .plus-quantity-icon{
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    .cart-overlay-bottom-row{
+        display: flex;
+        flex-direction: column;
+        margin: 0 2rem 0 2rem;
+        gap: 1rem;
+        padding-top: 1rem;
+        
+        .subtotal{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding-right: 1.5rem;
+            
+            .subtotal-header{
+                letter-spacing: 0.25rem;
+                font-size:smaller;
+            }
+        }
+    
+        .subtotal-additional{
+            font-size: 15px;
+        }
+
+        .cart-checkout-button{
+            padding-top: 0.7rem;
+            padding-bottom: 0.7rem;
+
+            letter-spacing: 0.25rem;
+            background: transparent;
+            border: none;
+            background-color: #BCECAC;
+        }
+    }
+}
+
 .main-content-blurred{
     filter: blur(8px);
     pointer-events: none;
@@ -164,6 +321,7 @@ main{
 .nav-drawer-overlay.closed{
     transform: translateX(-100%);
 }
+
 .main-content-blurred{
     filter: blur(4px);
     pointer-events: none;

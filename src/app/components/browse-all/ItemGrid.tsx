@@ -94,7 +94,6 @@ export default function Component({filters} : {filters: { category: string, subc
     }, [items, images])
     
     
-    console.log(displayProducts)
     return(
         <div className="item-grid">
             {displayProducts && 
