@@ -7,15 +7,18 @@ import {useState} from 'react'
 
 export default function PageShell(){
     const [navOpen, setNavOpen] = useState<boolean>(false);
-    
+    const [cartOpen, setCartOpen] = useState<boolean>(false);
+    const [product_count, setProductCount] = useState<number>(); 
     return (
         <>
-            <Header navOpen={navOpen} setNavOpen={setNavOpen}/>
+            <Header cartOpen={cartOpen} setCartOpen={setCartOpen} navOpen={navOpen} setNavOpen={setNavOpen}/>
 
-            <main className={`${navOpen ? 'main-content-blurred' : ''}`}>
+            <main className={`${(navOpen || cartOpen) ? 'main-content-blurred' : ''}`}>
                 <Image className="browse-all-art" src="/browse-all-art.png" width={770} height={137} alt="art image for browse all" />
-
-                <BrowseAll />
+                {product_count && 
+                    <p className="product-count">Products: {product_count}</p>
+                }
+                <BrowseAll setProductCount={setProductCount}/>
             </main>
 
             <Footer navOpen={navOpen}/>

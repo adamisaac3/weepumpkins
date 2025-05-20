@@ -1,11 +1,11 @@
 'use client'
-import {useState, useEffect} from 'react'
-import SwappableImage from '../multi-use/SwappableImage'
+import {useState, useEffect, Dispatch, SetStateAction} from 'react'
+import SwappableImage from './SwappableImage'
 
 
-export default function Component({filters} : {filters: { category: string, subcategory: string, minPrice: string, maxPrice: string }}){
+export default function Component({filters, setProductCount} : {filters: { category: string, subcategory: string, minPrice: string, maxPrice: string }, setProductCount: Dispatch<SetStateAction<number | undefined>>}){
 
-    const [items, setItems] = useState<{id: number, product_name: string, category_id: number, subcategory_id: number, description: string, price: number, dimensions: string, category_name: string, subcategory_name: string}[]>()
+    const [items, setItems] = useState<{id: number, product_name: string, category_id: number, subcategory_id: number, description: string, price: number, dimensions: string, category_name: string, subcategory_name: string, item_count: number}[]>()
     const [images, setImages] = useState<{product_id: number, image_path: string, image_type: string}[]>()
     const [displayProducts, setDisplayProducts] = useState<{id: number, product_name: string, category_id: number, subcategory_id: number, description: string, price: number, dimensions: string, category_name: string, subcategory_name: string, thumbnail: string, secondary: string, url: string}[]>([]);
 
@@ -38,6 +38,11 @@ export default function Component({filters} : {filters: { category: string, subc
 
     useEffect(() => {
         if(items && images){
+
+            if(items.length > 0){
+                setProductCount(items[0].item_count)
+            }
+
             const productData = items.map((i) => {
                 const thumbnail = images.find((img) => 
                     img.product_id === i.id && 

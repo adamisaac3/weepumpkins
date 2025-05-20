@@ -1,6 +1,7 @@
 import {createAdminClient} from '../../../../utils/supabase/server'
 import PageShell from '@/app/components/category_dynamic/PageShell';
 import { notFound } from 'next/navigation';
+import './page.css'
 
 export async function generateStaticParams(){
     try{

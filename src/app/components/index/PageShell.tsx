@@ -11,11 +11,14 @@ import {useState} from 'react'
 export default function PageShell(){
     
     const [navOpen, setNavOpen] = useState<boolean>(false)
+    const [cartOpen, setCartOpen] = useState<boolean>(false);
+    const [searchOpen, setSearchOpen] = useState<boolean>(false);
+
     
     return (
         <>
-            <Header navOpen={navOpen} setNavOpen={setNavOpen}/>
-            <main className={`${navOpen ? 'main-content-blurred' : ''}`}>
+            <Header searchOpen={searchOpen} setSearchOpen={setSearchOpen} cartOpen={cartOpen} setCartOpen={setCartOpen} navOpen={navOpen} setNavOpen={setNavOpen}/>
+            <main className={`${(navOpen || cartOpen) ? 'main-content-blurred' : ''}`}>
 
 
                 <div className="front-images">
