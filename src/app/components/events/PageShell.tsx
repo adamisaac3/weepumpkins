@@ -10,6 +10,10 @@ export default function EventPageShell() {
 
 
     const [navOpen, setNavOpen] = useState(false);
+    const [cartOpen, setCartOpen] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
+
+
     const [past, setPast] = useState<{id: number, name: string, address: string, state: string, start_date: string, end_date: string, start_time: string, end_time: string, thumbnail: string, booth: string, city: string, event_url: string}[]>();
     const [future, setFuture] = useState<{id: number, name: string, address: string, state: string, start_date: string, end_date: string, start_time: string, end_time: string, thumbnail: string, booth: string, city: string, event_url: string}[]>();
 
@@ -50,7 +54,7 @@ export default function EventPageShell() {
 
     return (
         <>
-            <Header navOpen={navOpen} setNavOpen={setNavOpen}/>
+            <Header searchOpen={searchOpen} setSearchOpen={setSearchOpen} cartOpen={cartOpen} setCartOpen={setCartOpen} navOpen={navOpen} setNavOpen={setNavOpen}/>
             <main className={`${navOpen ? "main-content-blurred" : ""}`}>
                 <div className="future-events-div">
                     <h2 className="event-headers">Future Events</h2>

@@ -47,13 +47,13 @@ export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, sear
     }, [])
 
     useEffect(() => {
-        if(navOpen || cartOpen){
+        if(navOpen || cartOpen || searchOpen){
             document.body.style.overflow = 'hidden'
         }else{
             document.body.style.overflow = ''
         }
         return () => {document.body.style.overflow = '';};
-    }, [navOpen, cartOpen])
+    }, [navOpen, cartOpen, searchOpen])
 
     useEffect(() => {
 

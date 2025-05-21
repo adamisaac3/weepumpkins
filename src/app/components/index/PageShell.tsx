@@ -18,7 +18,7 @@ export default function PageShell(){
     return (
         <>
             <Header searchOpen={searchOpen} setSearchOpen={setSearchOpen} cartOpen={cartOpen} setCartOpen={setCartOpen} navOpen={navOpen} setNavOpen={setNavOpen}/>
-            <main className={`${(navOpen || cartOpen) ? 'main-content-blurred' : ''}`}>
+            <main className={`${(navOpen || cartOpen || searchOpen) ? 'main-content-blurred' : ''}`}>
 
 
                 <div className="front-images">

@@ -74,13 +74,14 @@ export default function Component({cart, cartOpen, handleCartClicked} : {cart: C
                     </button>
                 </div>
                 }
-                {cartOpen && cart &&
+                {cartOpen && cart && cart.length > 0 &&
                     <>
                         <motion.div 
                             className="cart-items"
                             initial={{opacity: 0}}
                             animate={{opacity: 1}}
                             transition={{duration: 0.35, delay: 0.2, ease:'easeIn'}}
+                            key="cart-content"
                         >
                             {cart.map((row, i) => {
                                 return(
@@ -120,7 +121,7 @@ export default function Component({cart, cartOpen, handleCartClicked} : {cart: C
                             className="cart-overlay-bottom-row"
                             initial={{opacity: 0}}
                             animate={{opacity: 1}}
-                            transition={{duration: 0.35, delay: 1}}
+                            transition={{duration: 0.35, delay: 1, ease:'easeIn'}}
                         >
                             <div className="subtotal">
                                 <p className="subtotal-header">SUBTOTAL</p>
@@ -131,11 +132,19 @@ export default function Component({cart, cartOpen, handleCartClicked} : {cart: C
                         </motion.div>
                     </>
                 }
-                {(!cart || cart.length === 0)&&  
-                    <div className="empty-cart">
+                {(((cart && cart.length === 0) || !cart))&&  
+                    <motion.div 
+                        className="empty-cart"
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        exit={{opacity: 0}}
+                        transition={{duration: 0.35, delay: 0.25}} 
+                        key="empty-cart"   
+                    >
                         <p>Your cart is currently empty.</p>
-                    </div>
+                    </motion.div>
                 }
+                
             </div>
         </AnimatePresence>
     )
