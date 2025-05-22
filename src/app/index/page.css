@@ -13,9 +13,10 @@
 
     .recent-items-div {
         display: flex;
-        flex-direction: row;
+        flex-direction: row-reverse;
         justify-content: center;
         align-items: center;
+        flex-wrap: wrap-reverse;
         gap: 3rem;
 
         .recent-item {
@@ -25,9 +26,18 @@
             align-items: center;
             gap: 1rem;
 
-            .recent-item-image {
-                box-shadow: 0 0 5px black;
+            .image-transition{
+                object-fit: cover;
+                transition: opacity 0.5s ease-in-out;
+                transform: 0.5s ease-in-out;
             }
+
+            .image-transition:hover{
+                opacity: 0.8;
+                transform:scale(1.02);
+                box-shadow: 0 3px 3px grey;
+            }
+
 
             .arrival-name-category-div {
                 display: flex;

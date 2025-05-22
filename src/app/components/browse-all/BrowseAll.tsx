@@ -9,7 +9,7 @@ export default function Component({setProductCount} : {setProductCount: Dispatch
     return(
         <div className="browse-all-div">
             <FilterSidebar filters={filters} setFilters={setFilters} />
-            <ItemGrid setProductCount={setProductCount} filters={filters} />
+            <ItemGrid filters={filters} />
         </div>
     )
 }

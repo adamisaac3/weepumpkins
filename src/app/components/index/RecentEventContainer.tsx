@@ -3,6 +3,7 @@ import { format, parse } from 'date-fns';
 import {useState, useEffect} from 'react'
 import Image from 'next/image';
 
+
 export default function RecentEventContainer(){
     
     function formatTime(timeString: string){

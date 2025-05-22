@@ -3,11 +3,12 @@ import {useState, useEffect, Dispatch, SetStateAction} from 'react'
 import SwappableImage from './SwappableImage'
 
 
-export default function Component({filters, setProductCount} : {filters: { category: string, subcategory: string, minPrice: string, maxPrice: string }, setProductCount: Dispatch<SetStateAction<number | undefined>>}){
+export default function Component({filters} : {filters: { category: string, subcategory: string, minPrice: string, maxPrice: string }}){
 
     const [items, setItems] = useState<{id: number, product_name: string, category_id: number, subcategory_id: number, description: string, price: number, dimensions: string, category_name: string, subcategory_name: string, item_count: number}[]>()
     const [images, setImages] = useState<{product_id: number, image_path: string, image_type: string}[]>()
     const [displayProducts, setDisplayProducts] = useState<{id: number, product_name: string, category_id: number, subcategory_id: number, description: string, price: number, dimensions: string, category_name: string, subcategory_name: string, thumbnail: string, secondary: string, url: string}[]>([]);
+    const [productDisplay, setProductDisplay] = useState<number>();
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -40,7 +41,7 @@ export default function Component({filters, setProductCount} : {filters: { categ
         if(items && images){
 
             if(items.length > 0){
-                setProductCount(items[0].item_count)
+                setProductDisplay(items[0].item_count)
             }
 
             const productData = items.map((i) => {
@@ -101,31 +102,37 @@ export default function Component({filters, setProductCount} : {filters: { categ
     
     return(
         <div className="item-grid">
-            {displayProducts && 
-                displayProducts.map((p) => {
+            <div className="product-wrapper">
+                {productDisplay && 
+                    <p>Products: {productDisplay}</p>
+                }
+            </div>
+            <div className="items-wrapper">
+                {displayProducts && 
+                    displayProducts.map((p) => {
 
-                    return (
-                        <div key={p.id} className="item">
-                            <a href={p.url}>
-                                <SwappableImage thumbnail={p.thumbnail} alt={p.secondary} category={p.category_id} />
-                            </a>
-                            <div className="category-div">
-                                <p className="item-name">{p.product_name}</p>
-                                <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 9.5C13.3807 9.5 14.5 10.6193 14.5 12C14.5 13.3807 13.3807 14.5 12 14.5C10.6193 14.5 9.5 13.3807 9.5 12C9.5 10.6193 10.6193 9.5 12 9.5Z" fill="#000000"/>
-                                </svg>
-                                <p className="item-subcategory">{p.subcategory_name}</p>
+                        return (
+                            <div key={p.id} className="item">
+                                <a href={p.url}>
+                                    <SwappableImage thumbnail={p.thumbnail} alt={p.secondary} category={p.category_id} />
+                                </a>
+                                <div className="category-div">
+                                    <p className="item-name">{p.product_name}</p>
+                                    <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 9.5C13.3807 9.5 14.5 10.6193 14.5 12C14.5 13.3807 13.3807 14.5 12 14.5C10.6193 14.5 9.5 13.3807 9.5 12C9.5 10.6193 10.6193 9.5 12 9.5Z" fill="#000000"/>
+                                    </svg>
+                                    <p className="item-subcategory">{p.subcategory_name}</p>
+                                </div>
+                                <div className="item-price-div">
+                                    <p className="item-price">$ {p.price} USD</p>
+                                </div>
+                                
                             </div>
-                            <div className="item-price-div">
-                                <p className="item-price">$ {p.price} USD</p>
-                            </div>
-                            
-                        </div>
-                    )
-                })
+                        )
+                    })
 
-            }
-
+                }
+            </div>
         </div>
     )
 

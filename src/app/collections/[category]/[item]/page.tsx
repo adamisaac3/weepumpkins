@@ -67,6 +67,7 @@ export default async function Page( {params}: {params: ItemParams}){
         });
 
         if(!item || error || item.length === 0 || (item[0].productname as string).replace(/[:\/_<>\s]/g, '-').toLowerCase() !== compare){
+            
             console.log(error)
             notFound();
         }
@@ -75,7 +76,7 @@ export default async function Page( {params}: {params: ItemParams}){
 
 
         if(imagesError || !images){
-            console.log(error);
+            console.log(imagesError);
             notFound();
         }
 

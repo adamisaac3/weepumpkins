@@ -22,10 +22,14 @@ export default function Component({item} : {item: {productid: number, productnam
                 </div>
                 <div className="item-category-info">
                     <h2 className="item-category">{item.categoryname}</h2>
-                    <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 9.5C13.3807 9.5 14.5 10.6193 14.5 12C14.5 13.3807 13.3807 14.5 12 14.5C10.6193 14.5 9.5 13.3807 9.5 12C9.5 10.6193 10.6193 9.5 12 9.5Z" fill="#000000" />
-                    </svg>
-                    <h2 className="item-subcategory">{item.subcategoryname}</h2>
+                    {item.subcategoryname && 
+                        <>
+                            <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 9.5C13.3807 9.5 14.5 10.6193 14.5 12C14.5 13.3807 13.3807 14.5 12 14.5C10.6193 14.5 9.5 13.3807 9.5 12C9.5 10.6193 10.6193 9.5 12 9.5Z" fill="#000000" />
+                            </svg>
+                            <h2 className="item-subcategory">{item.subcategoryname}</h2>
+                        </>
+                    }
                 </div>
                 <p className="item-price">$ {hasDecimal(item.price) ? item.price : item.price.toFixed(2)}</p>
             </div>
