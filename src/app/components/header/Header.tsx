@@ -5,16 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from 'next/image'
 import Cart from '../../components/header/Cart'
 import Search from '../../components/header/Search'
-
-type CartItem = {
-                        product_name: string;
-                        price: number;
-                        quantity: number;
-                        category_name: string;
-                        image_path: string;
-                        category_id: number;
-                    };
-
+import { usePathname } from "next/navigation";
+import {CartItem} from '../../types/types'
 export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, searchOpen, setSearchOpen} : {navOpen: boolean, setNavOpen: Dispatch<SetStateAction<boolean>>, cartOpen: boolean, setCartOpen: Dispatch<SetStateAction<boolean>>, searchOpen: boolean, setSearchOpen: Dispatch<SetStateAction<boolean>>}){ 
     
 
@@ -29,22 +21,27 @@ export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, sear
     
     const [cart, setCart] = useState<CartItem[]>()
 
-    useEffect(() => {
-        const fetchCart = async () => {
-            const response = await fetch('/api/get-cart');
-            const data = await response.json()
+    const router = usePathname();
+    const isCartPage = (router === '/cart' || router?.startsWith('/checkout'))
+
+    if (!isCartPage) {
+        useEffect(() => {
+            const fetchCart = async () => {
+                const response = await fetch('/api/get-cart');
+                const data = await response.json()
 
 
-            if(response.ok){
-                
-                if (!data['noCart'] && Array.isArray(data)) {
-                    const cartParam = data.map((row: CartItem) => row);
-                    setCart(cartParam);
+                if (response.ok) {
+
+                    if (!data['noCart'] && Array.isArray(data)) {
+                        const cartParam = data.map((row: CartItem) => row);
+                        setCart(cartParam);
+                    }
                 }
             }
-        }
-        fetchCart()
-    }, [])
+            fetchCart()
+        }, [])
+    }
 
     useEffect(() => {
         if(navOpen || cartOpen || searchOpen){
@@ -101,9 +98,6 @@ export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, sear
         }
         fetchCats();
     }, [])
-
-
-    console.log(cart);
 
     return(
         <>
@@ -187,14 +181,15 @@ export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, sear
                         <path d="M17.029 16.5295L19.5 19.0005" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                 </button>
-                
-                <button onClick={handleCartClicked} className={`cart-button ${(navOpen || cartOpen) ? 'main-content-blurred' : ''}`}>
-                    <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3.864 16.4552C4.40967 18.6379 4.68251 19.7292 5.49629 20.3646C6.31008 21 7.435 21 9.68486 21H14.3155C16.5654 21 17.6903 21 18.5041 20.3646C19.3179 19.7292 19.5907 18.6379 20.1364 16.4552C20.9943 13.0234 21.4233 11.3075 20.5225 10.1538C19.6217 9 17.853 9 14.3155 9H9.68486C6.14745 9 4.37875 9 3.47791 10.1538C2.94912 10.831 2.87855 11.702 3.08398 13" stroke="#1C274C" strokeWidth="1.5" strokeLinecap="round"/>
-                        <path d="M19.5 9.5L18.7896 6.89465C18.5157 5.89005 18.3787 5.38775 18.0978 5.00946C17.818 4.63273 17.4378 4.34234 17.0008 4.17152C16.5619 4 16.0413 4 15 4M4.5 9.5L5.2104 6.89465C5.48432 5.89005 5.62128 5.38775 5.90221 5.00946C6.18199 4.63273 6.56216 4.34234 6.99922 4.17152C7.43808 4 7.95872 4 9 4" stroke="#1C274C" strokeWidth="1.5"/>
-                        <path d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4C15 4.55228 14.5523 5 14 5H10C9.44772 5 9 4.55228 9 4Z" stroke="#1C274C" strokeWidth="1.5"/>
-                    </svg>
-                </button>
+                {!isCartPage && 
+                    <button onClick={handleCartClicked} className={`cart-button ${(navOpen || cartOpen) ? 'main-content-blurred' : ''}`}>
+                        <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.864 16.4552C4.40967 18.6379 4.68251 19.7292 5.49629 20.3646C6.31008 21 7.435 21 9.68486 21H14.3155C16.5654 21 17.6903 21 18.5041 20.3646C19.3179 19.7292 19.5907 18.6379 20.1364 16.4552C20.9943 13.0234 21.4233 11.3075 20.5225 10.1538C19.6217 9 17.853 9 14.3155 9H9.68486C6.14745 9 4.37875 9 3.47791 10.1538C2.94912 10.831 2.87855 11.702 3.08398 13" stroke="#1C274C" strokeWidth="1.5" strokeLinecap="round"/>
+                            <path d="M19.5 9.5L18.7896 6.89465C18.5157 5.89005 18.3787 5.38775 18.0978 5.00946C17.818 4.63273 17.4378 4.34234 17.0008 4.17152C16.5619 4 16.0413 4 15 4M4.5 9.5L5.2104 6.89465C5.48432 5.89005 5.62128 5.38775 5.90221 5.00946C6.18199 4.63273 6.56216 4.34234 6.99922 4.17152C7.43808 4 7.95872 4 9 4" stroke="#1C274C" strokeWidth="1.5"/>
+                            <path d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4C15 4.55228 14.5523 5 14 5H10C9.44772 5 9 4.55228 9 4Z" stroke="#1C274C" strokeWidth="1.5"/>
+                        </svg>
+                    </button>
+                }
             </div>
             <Cart cart={cart} cartOpen={cartOpen} handleCartClicked={handleCartClicked} />
         </header>

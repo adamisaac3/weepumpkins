@@ -1,4 +1,3 @@
-'use client'
 import { CheckoutProvider } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 

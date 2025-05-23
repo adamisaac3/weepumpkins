@@ -50,7 +50,6 @@ export default function Component({cart, cartOpen, handleCartClicked} : {cart: C
         return num % 1 !== 0;
     }
 
-    console.log(cart);
 
     return (
         <AnimatePresence>
