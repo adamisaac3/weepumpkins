@@ -1,6 +1,6 @@
 import {motion} from 'framer-motion'
 import {useState} from 'react'
-export default function Component({label, value, onChange}: {label: string, value: string, onChange: () => void}){
+export default function Component({label, value, name}: {label: string, value: string, name: string}){
     
     const [focused, setIsFocused] = useState(false)
     
@@ -9,14 +9,13 @@ export default function Component({label, value, onChange}: {label: string, valu
     return(
         <div 
             className="animated-input-div"
-            style={{position: 'relative'}}
+            style={{position: 'relative', width:'50px', height:'35px'}}
         >
             <input 
-                value={value}
-                onChange={onChange}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
                 className="animated-input"
+                style={{height: '50px', width: '80px'}}
             />
 
             <motion.label 

@@ -1,4 +1,5 @@
-import PageShell from "@/app/components/checkout/information/PageShell";
+import PageShell from '../../components/checkout/payment/PageShell'
+
 export default function Page(){
     return(
         <>
