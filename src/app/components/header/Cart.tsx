@@ -2,18 +2,12 @@
 import {useEffect, useRef} from 'react'
 import Image from 'next/image'
 import {motion, AnimatePresence} from 'framer-motion'
+import { useCartStore } from '@/app/stores/useCartStore'
 
-type CartItem = {
-                    product_name: string;
-                    price: number;
-                    quantity: number;
-                    category_name: string;
-                    image_path: string;
-                    category_id: number;
-                };
-
-export default function Component({cart, cartOpen, handleCartClicked} : {cart: CartItem[] | undefined, cartOpen: boolean, handleCartClicked: () => void}){
+export default function Component({cartOpen, handleCartClicked} : {cartOpen: boolean, handleCartClicked: () => void}){
     
+    const {items: cart} = useCartStore();
+
     const cartRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {

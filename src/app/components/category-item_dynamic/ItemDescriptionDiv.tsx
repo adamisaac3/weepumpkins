@@ -2,13 +2,22 @@
 import DisclaimerButton from './DisclaimerButton'
 import CartButton from './CartButton'
 import {AddItemHandler} from './AddItemToCart'
-
+import { CartItem } from '@/app/types/types'
 function hasDecimal(num: number){
     return num % 1 !== 0
 }
 
-export default function Component({item} : {item: {productid: number, productname: string, categoryname: string, subcategoryname: string, categoryid: number, subcategoryid: number, description: string, price: number, dimensions: string}}){
+export default function Component({item, thumbnail} : {thumbnail: string, item: {productid: number, productname: string, categoryname: string, subcategoryname: string, categoryid: number, subcategoryid: number, description: string, price: number, dimensions: string}}){
 
+    const cart_item: CartItem = {
+        product_name: item.productname,
+        product_id: item.productid,
+        price: item.price,
+        quantity: 1,
+        category_name: item.categoryname,
+        image_path: thumbnail,
+        category_id: item.categoryid
+    }
 
     return (
         <div className="item-details-div">
@@ -54,7 +63,7 @@ export default function Component({item} : {item: {productid: number, productnam
                     </div>
                 </div>
                 <div className="payment-buttons">
-                    <CartButton product_id={item.productid} />
+                    <CartButton product={cart_item} />
 
                     <button className="venmo-button">Buy With
                         <svg fill="#FFFFFF" width="68px" height="68px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">

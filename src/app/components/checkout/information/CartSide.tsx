@@ -1,24 +1,8 @@
-import {useState, useEffect} from 'react'
-import { CartItem } from '@/app/types/types';
-export default function Component(){
-    const [cart, setCart] = useState<CartItem[]>();
+import { useCartStore } from '@/app/stores/useCartStore';
+import Image from 'next/image'
+export default function CartSide(){
     
-    useEffect(() => {
-        const fetchCart = async () => {
-            const response = await fetch('/api/get-cart');
-            const data = await response.json()
-
-
-            if (response.ok) {
-
-                if (!data['noCart'] && Array.isArray(data)) {
-                    const cartParam = data.map((row: CartItem) => row);
-                    setCart(cartParam);
-                }
-            }
-        }
-        fetchCart()
-    }, [])
+    const {items: cart} = useCartStore();
 
     function hasDecimal(num: number){
         return num % 1 !== 0;
@@ -34,4 +18,13 @@ export default function Component(){
         
         return hasDecimal(subtotal) ? `$ ${subtotal}` : `$ ${subtotal.toFixed(2)}`;
     }
+
+    return(
+        <div className="cart-side">
+            <Image width={675} height={665} src="/checkout-cart-background.png" className="cart-background" alt="background art" />
+            <div className="cart-overlay">
+                <p>Overlay</p>
+            </div>
+        </div>
+    )
 }

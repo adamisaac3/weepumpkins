@@ -1,21 +1,7 @@
 import {create} from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { PersistStorage, StorageValue } from 'zustand/middleware';
-
-type CheckoutState = {
-    email: string,
-    country: string,
-    first_name: string,
-    last_name: string,
-    company: string,
-    address: string,
-    apartment: string,
-    city: string,
-    state: string,
-    zipcode: string,
-    phone: string,
-    setCheckoutInfo: (info: Partial<CheckoutState>) => void
-}
+import { CheckoutState } from '../types/types';
 
 const zustandSessionStorage: PersistStorage<CheckoutState> = {
     getItem: (key: string) => {

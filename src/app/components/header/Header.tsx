@@ -7,41 +7,20 @@ import Cart from '../../components/header/Cart'
 import Search from '../../components/header/Search'
 import { usePathname } from "next/navigation";
 import {CartItem} from '../../types/types'
+import { useNavbarStore } from "@/app/stores/useNavbarStore";
 export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, searchOpen, setSearchOpen} : {navOpen: boolean, setNavOpen: Dispatch<SetStateAction<boolean>>, cartOpen: boolean, setCartOpen: Dispatch<SetStateAction<boolean>>, searchOpen: boolean, setSearchOpen: Dispatch<SetStateAction<boolean>>}){ 
     
 
     type Items = Record<number, {category_name: string, category_url: string, subcategories: string[]}>
-    const [items, setItems] = useState<Items>();
-    const [socialsDelay, setSocialsDelay] = useState<number>(1);
     const drawerRef = useRef<HTMLDivElement>(null);
 
     const handleNavClicked = useCallback(() => setNavOpen((open) => !open), [setNavOpen]);
     const handleCartClicked = useCallback(() => setCartOpen((open) => !open), [setCartOpen])
     const handleSearchClicked = useCallback(() => setSearchOpen((open) => !open), [setSearchOpen]);
     
-    const [cart, setCart] = useState<CartItem[]>()
-
     const router = usePathname();
     const isCartPage = (router === '/cart' || router?.startsWith('/checkout'))
 
-    if (!isCartPage) {
-        useEffect(() => {
-            const fetchCart = async () => {
-                const response = await fetch('/api/get-cart');
-                const data = await response.json()
-
-
-                if (response.ok) {
-
-                    if (!data['noCart'] && Array.isArray(data)) {
-                        const cartParam = data.map((row: CartItem) => row);
-                        setCart(cartParam);
-                    }
-                }
-            }
-            fetchCart()
-        }, [])
-    }
 
     useEffect(() => {
         if(navOpen || cartOpen || searchOpen){
@@ -72,32 +51,17 @@ export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, sear
     
     }, [handleNavClicked, navOpen])
 
+    let { categoryMap: items, socialsDelay, fetched, fetchNavState } = useNavbarStore();
 
     useEffect(() => {
-        const fetchCats = async () => {
-            const response = await fetch('/api/get-cats-subcats')
-            const data = await response.json();
-            const categoryMap: Record<number, {category_name: string, category_url: string, subcategories: string[]}> = {};
-            
-            if(response.ok){        
-                data.forEach((i: {categoryname: string, subcategoryname: string, category_id: number, subcategory_id: number, category_desc: string, subcategory_desc: string, category_dimensions: string, subcategory_dimensions: string}) => {
-                    if(!categoryMap[i.category_id]){
-                        const cat_url = '/collections/' + i.categoryname.replace(' ', '-').toLowerCase();
-                        
-                        categoryMap[i.category_id] = {category_name: i.categoryname, category_url: cat_url, subcategories: []}
-                    }
-                
-                    if(i.subcategory_id){
-                        categoryMap[i.category_id].subcategories.push(i.subcategoryname);
-                    }
-                })
-            
-                setItems(categoryMap);
-                setSocialsDelay(Object.keys(categoryMap).length);
-            }
+        if (!fetched) {
+            (async () => {
+                items = await fetchNavState();
+                socialsDelay = Object.keys(items).length
+                fetched = true;
+            })();
         }
-        fetchCats();
-    }, [])
+    }, [fetched, fetchNavState]);
 
     return(
         <>
@@ -191,7 +155,7 @@ export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, sear
                     </button>
                 }
             </div>
-            <Cart cart={cart} cartOpen={cartOpen} handleCartClicked={handleCartClicked} />
+            <Cart cartOpen={cartOpen} handleCartClicked={handleCartClicked} />
         </header>
         {searchOpen &&
             <Search searchOpen={searchOpen} setSearchOpen={setSearchOpen} />

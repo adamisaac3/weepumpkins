@@ -37,10 +37,10 @@ export default function InformationForm(){
 
 
     return(
-        <>
+        <div className="info-side">
             <header className="checkout-head">
-                <Image src="/checkout-art.png" alt="Checkout art" width={185} height={33} />
-                <menu>
+                <Image src="/checkout-art.png" alt="Checkout art" width={205} height={40} />
+                <menu className="checkout-flow">
                     <li className="order-item">
                         <a className="list-item-anchor" href="/cart">Cart</a>
                     </li>
@@ -58,13 +58,13 @@ export default function InformationForm(){
                     </li>
                 </menu>
             </header>
-            <section>
-                <form ref={formRef} onSubmit={handleSubmit}>
+            <section className="contact-info">
+                <form ref={formRef} onSubmit={handleSubmit} className="info-form">
                     <div className="initial-contact">
                         <h2>Contact</h2>
-                        <input name="email" type="email" placeholder="Email" required />
+                        <AnimatedInput label="Email" isRequired={true} name="email" />
                     </div>
-                    <div>
+                    <div className="disclaimer">
                         <h2>Delivery Disclaimer</h2>
                         <p>
                             Currently shipping is only available to locations within the United States.
@@ -72,26 +72,40 @@ export default function InformationForm(){
                         </p>
                     </div>
                     <div className="shipping-info">
-                        <AnimatedInput label="Country" value="value" name="country" />
-                        <input name="first_name" placeholder="First name" defaultValue={first_name} required></input>
-                        <input name="last_name" placeholder="Last name"required/>
-                        <input name="address" placeholder="Address" required/>
-                        <input name="apartment" placeholder="Apartment" />
-                        <input name="city" placeholder="City"  required/>
-                        <input name="state" placeholder="State" required/>
-                        <input name="zipcode" placeholder="Zip Code" required/>
-                        <input name="phone" type="tel" placeholder="Phone Number" defaultValue={phone} />
+                        <AnimatedInput label="Country" isRequired={true} name="country" />
+                        <div className="first-last">
+                            <AnimatedInput label="First name" isRequired={true} name="first_name" />
+                            <AnimatedInput label="Last name" isRequired={true} name="last_name" />
+                        </div>
+                        <AnimatedInput label="Address" isRequired={true} name="address" />
+                        <AnimatedInput name="apartment" isRequired={false} label="Apartment" />
+                        <div className="city-state-zip">
+                            <AnimatedInput name="city" isRequired={true} label="City" />
+                            <AnimatedInput name="state" isRequired={true} label="State" />
+                            <AnimatedInput name="zipcode" isRequired={true} label="ZIP code" />
+                        </div>
+                        <AnimatedInput name="phone" isRequired={false} label="Phone Number" />
                     </div>
                     
                     <div className="form-bottom-row">
-                        <a href="/cart">
+                        <a href="/cart" className="return-cart">
+                            <svg fill="#000000" height="12px" width="12px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 512.006 512.006" xmlSpace="preserve">
+                            <g>
+                                <g>
+                                    <path d="M388.419,475.59L168.834,256.005L388.418,36.421c8.341-8.341,8.341-21.824,0-30.165s-21.824-8.341-30.165,0
+                                        L123.586,240.923c-8.341,8.341-8.341,21.824,0,30.165l234.667,234.667c4.16,4.16,9.621,6.251,15.083,6.251
+                                        c5.461,0,10.923-2.091,15.083-6.251C396.76,497.414,396.76,483.931,388.419,475.59z"/>
+                                </g>
+                            </g>
+                            </svg>
                             <p>Return to cart</p>
                         </a>
-                        <button type="submit">Continue to payment</button>
+                        <button className="continue-button" type="submit">Continue to payment</button>
                     </div>
                 </form>
             </section>
-        </>
+        </div>
     )
 
 }

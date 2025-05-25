@@ -16,7 +16,7 @@ export default function PageShell({item, thumbnail, alts} : {item: {productid: n
                 <Header searchOpen={searchOpen} setSearchOpen={setSearchOpen} cartOpen={cartOpen} setCartOpen={setCartOpen} navOpen={navOpen} setNavOpen={setNavOpen}/>
                 <main className={`${navOpen ? "main-content-blurred" : ''}`}>
                     <ImageDiv thumbnail={thumbnail} altImages={alts} category={item.categoryid}/>
-                    <ItemDescriptionDiv item={item} />
+                    <ItemDescriptionDiv item={item} thumbnail={thumbnail}/>
                 </main>
                 <aside className={`${navOpen ? "main-content-blurred" : ''}`}>
                     <Recommendations category={item.categoryid} id={item.productid} />
