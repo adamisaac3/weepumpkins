@@ -107,15 +107,75 @@
     .cart-side{
         margin-left: 2rem;
         border-left: 1.5px solid grey;
+        width: 100%;
+        height: 100%;
         
         .cart-background{
-            position: sticky;
+            position: fixed;
         }
 
-        .cart-overlay{
+        .cart-wrapper{
             position: fixed;
             z-index: 1000;
-            background-color: grey;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(237, 233, 232, 0.5);
+
+
+            .cart-overlay{
+                margin: 3rem 3rem 0 3rem;
+
+                .cart-items {
+                    max-height: 10rem;
+                    overflow-y: auto;
+                    z-index: 10000;
+                    padding-top: 1.5rem;
+                    .cart-item {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 0.5rem;
+
+                        .item-price{
+                            margin-left: 10rem;
+                        }
+
+                        .item-info{
+                            display: flex;
+                            flex-direction: column;
+                            gap: .3rem;
+                        }
+
+                        .thumbnail-quantity {
+                            .cart-item-thumbnail {
+                                object-fit: cover;
+                                border-radius: 10%;
+                            }
+            
+                            .quantity-circle {
+                                width: 20px;
+                                height: 20px;
+                                background-color: rgb(0, 0, 0, .5);
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                position: relative;
+                                bottom: 4.7rem;
+                                left: 3.25rem;
+            
+            
+                                .quantity {
+                                    color: white;
+                                    font-size: 12px;
+                                    z-index: 10000;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            
 
         }
     }

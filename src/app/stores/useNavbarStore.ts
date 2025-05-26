@@ -48,9 +48,9 @@ export const useNavbarStore = create(persist<NavState>((set) => ({
                 })
             }
             
-            return fetched_categoryMap;
+            set((state) => ({ ...state, categoryMap: fetched_categoryMap, fetched: true, socialsDelay: Object.keys(fetched_categoryMap).length}))
         }
-        return fetchCats();
+        fetchCats();
     }
 }), {
     name: 'navbar-store',

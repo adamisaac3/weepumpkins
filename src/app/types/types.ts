@@ -18,7 +18,7 @@ export type NavState = {
     categoryMap: Record<number, CategoryMap> | undefined,
     socialsDelay: number,
     fetched: boolean,
-    fetchNavState: () => Promise<Record<number, CategoryMap>>
+    fetchNavState: () => void
 }
 
 export type CheckoutState = {

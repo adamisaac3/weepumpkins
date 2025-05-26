@@ -6,12 +6,10 @@ import Image from 'next/image'
 import Cart from '../../components/header/Cart'
 import Search from '../../components/header/Search'
 import { usePathname } from "next/navigation";
-import {CartItem} from '../../types/types'
 import { useNavbarStore } from "@/app/stores/useNavbarStore";
+import useInitNavbar from "./InitNavbar";
 export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, searchOpen, setSearchOpen} : {navOpen: boolean, setNavOpen: Dispatch<SetStateAction<boolean>>, cartOpen: boolean, setCartOpen: Dispatch<SetStateAction<boolean>>, searchOpen: boolean, setSearchOpen: Dispatch<SetStateAction<boolean>>}){ 
     
-
-    type Items = Record<number, {category_name: string, category_url: string, subcategories: string[]}>
     const drawerRef = useRef<HTMLDivElement>(null);
 
     const handleNavClicked = useCallback(() => setNavOpen((open) => !open), [setNavOpen]);
@@ -21,6 +19,9 @@ export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, sear
     const router = usePathname();
     const isCartPage = (router === '/cart' || router?.startsWith('/checkout'))
 
+    useInitNavbar();
+    
+    const {categoryMap: items, socialsDelay} = useNavbarStore();
 
     useEffect(() => {
         if(navOpen || cartOpen || searchOpen){
@@ -50,18 +51,6 @@ export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, sear
         };
     
     }, [handleNavClicked, navOpen])
-
-    let { categoryMap: items, socialsDelay, fetched, fetchNavState } = useNavbarStore();
-
-    useEffect(() => {
-        if (!fetched) {
-            (async () => {
-                items = await fetchNavState();
-                socialsDelay = Object.keys(items).length
-                fetched = true;
-            })();
-        }
-    }, [fetched, fetchNavState]);
 
     return(
         <>
