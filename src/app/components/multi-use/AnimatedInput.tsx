@@ -7,7 +7,7 @@ export default function Component({label,  name, isRequired}: {label: string, na
     const [value, setValue] = useState('');
     const showLabel = focused || value.length > 0
     const isEmpty = value.trim() === ''
-    const showError = isEmpty && !focused && isRequired && hasBeenFocused
+    const [showError, setShowError] = useState(isEmpty && !focused && isRequired && hasBeenFocused);
 
 
     return(
@@ -51,8 +51,16 @@ export default function Component({label,  name, isRequired}: {label: string, na
                     setHasBeenFocused(true)
                 }}
                 onBlur={() => setIsFocused(false)}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => {
+                    setValue(e.target.value)
+                    setShowError(false);
+                }}
                 className="animated-input"
+                required={isRequired}
+                onInvalid={(e) => {
+                    e.preventDefault()
+                    setShowError(true)
+                }}
             />   
             <AnimatePresence>
                 {showError && 

@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     .info-side{
+        flex: 0 0 55.5%;
         .checkout-head {
                 display: flex;
                 flex-direction: column;
@@ -105,25 +106,65 @@
     }
     
     .cart-side{
-        margin-left: 2rem;
-        border-left: 1.5px solid grey;
         width: 100%;
         height: 100%;
+        flex: 0 0 45.5%;
+        position: relative;
         
         .cart-background{
             position: fixed;
+            border-left: 1.5px solid black;
+            z-index: 0;
         }
 
         .cart-wrapper{
-            position: fixed;
             z-index: 1000;
-            width: 100%;
-            height: 100%;
-            background-color: rgb(237, 233, 232, 0.5);
-
+            width: 45.5vw;
+            height: 100vh;
+            background-color: rgb(245, 240, 240, 0.75);
+            position: fixed;
+            
 
             .cart-overlay{
                 margin: 3rem 3rem 0 3rem;
+                max-width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+
+                .discount-input{
+                    display: flex;
+                    flex-direction: row;
+                    gap: 1.3rem;                
+                }
+
+                .bottom-row{
+                    margin-top: .5rem;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    .shipping, .taxes, .total{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                    }
+
+                    .total{
+                        align-items: center;
+                    }
+
+                    .subtotal{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        .subtotal-wrapper{
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            gap: 0.1rem;
+                        }
+                    }
+                }
 
                 .cart-items {
                     max-height: 10rem;
@@ -154,7 +195,7 @@
                             .quantity-circle {
                                 width: 20px;
                                 height: 20px;
-                                background-color: rgb(0, 0, 0, .5);
+                                background-color: rgb(0, 0, 0, .6);
                                 border-radius: 50%;
                                 display: flex;
                                 align-items: center;
@@ -174,9 +215,6 @@
                     }
                 }
             }
-
-            
-
         }
     }
 }

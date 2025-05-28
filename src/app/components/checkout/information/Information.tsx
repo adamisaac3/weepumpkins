@@ -89,7 +89,7 @@ export default function InformationForm(){
                     
                     <div className="form-bottom-row">
                         <a href="/cart" className="return-cart">
-                            <svg fill="#000000" height="12px" width="12px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" 
+                            <svg fill="#000000" height="10px" width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" 
                                 viewBox="0 0 512.006 512.006" xmlSpace="preserve">
                             <g>
                                 <g>

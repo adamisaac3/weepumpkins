@@ -22,7 +22,7 @@ export default function CartSide(){
 
     return(
         <div className="cart-side">
-            <Image width={675} height={645} src="/checkout-cart-background.png" className="cart-background" alt="background art" />
+            <Image width={575} height={600} src="/checkout-cart-background.png" className="cart-background" alt="background art" />
             <div className="cart-wrapper">
                 <div className="cart-overlay">
                     <div className="cart-items">
@@ -37,7 +37,7 @@ export default function CartSide(){
                                         </div>
                                     </div>
                                     <div className="item-info">
-                                        <p>{row.product_name}</p>
+                                        <p>{row.product_name} - {row.product_id}</p>
                                         <p>{row.category_name}</p>
                                     </div>
                                     <p className="item-price">${hasDecimal(row.price) ? row.price : row.price.toFixed(2)}</p>
@@ -50,11 +50,13 @@ export default function CartSide(){
                         <AnimatedInput isRequired={false} name="discount" label={'Discount code or gift cart'} />
                         <button>Apply</button>
                     </div>
-                    <div className="botton-row">
+                    <div className="bottom-row">
                         <div className="subtotal">
                             <div className="subtotal-wrapper">
                                 <p>Subtotal</p>
-                                {/* SVG for small dot */}
+                                <svg width="13px" height="13px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 9.5C13.3807 9.5 14.5 10.6193 14.5 12C14.5 13.3807 13.3807 14.5 12 14.5C10.6193 14.5 9.5 13.3807 9.5 12C9.5 10.6193 10.6193 9.5 12 9.5Z" fill="#000000"/>
+                                </svg>
                                 <p>{cart.length} {cart.length > 1 ? 'items' : 'item'}</p>
                             </div>
                             <p>{getSubtotal()} USD</p>
@@ -65,7 +67,7 @@ export default function CartSide(){
                         </div>
                         <div className="taxes">
                             <p>Estimated taxes</p>
-                            <p>taxes here</p>
+                            <p>Calculated at next step</p>
                         </div>
                         <div className="total">
                             <h2>Total</h2>

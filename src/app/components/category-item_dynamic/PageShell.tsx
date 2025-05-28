@@ -11,12 +11,13 @@ export default function PageShell({item, thumbnail, alts} : {item: {productid: n
     const [navOpen, setNavOpen] = useState<boolean>(false)
     const [cartOpen, setCartOpen] = useState<boolean>(false);
     const [searchOpen, setSearchOpen] = useState(false);
+    
     return (
             <>
                 <Header searchOpen={searchOpen} setSearchOpen={setSearchOpen} cartOpen={cartOpen} setCartOpen={setCartOpen} navOpen={navOpen} setNavOpen={setNavOpen}/>
                 <main className={`${navOpen ? "main-content-blurred" : ''}`}>
                     <ImageDiv thumbnail={thumbnail} altImages={alts} category={item.categoryid}/>
-                    <ItemDescriptionDiv item={item} thumbnail={thumbnail}/>
+                    <ItemDescriptionDiv cartOpen={cartOpen} setCartOpen={setCartOpen} item={item} thumbnail={thumbnail}/>
                 </main>
                 <aside className={`${navOpen ? "main-content-blurred" : ''}`}>
                     <Recommendations category={item.categoryid} id={item.productid} />
