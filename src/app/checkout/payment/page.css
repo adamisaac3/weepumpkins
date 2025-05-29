@@ -1,170 +1,194 @@
 .checkout-main{
     display: flex;
     flex-direction: row;
-    .info-side{
+
+    .payment-side{
         flex: 0 0 55.5%;
-        .checkout-head {
+        
+        .checkout-details{
+            padding-left: 3.5rem;
+            padding-top: 1.5rem;
+            padding-right: 3.5rem;
+
+
+            .bottom-row{
+                padding-top: 1.5rem;
+                padding-bottom: 4rem;
                 display: flex;
-                flex-direction: column;
-                padding-left: 3.5rem;
-                padding-top: 3.5rem;
-        
-                gap: 1rem;
-        
-                .checkout-flow {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                .confirm{
+                    padding: 1.5rem 1rem 1.5rem 1rem;
+                    letter-spacing: 0.15rem;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    background: transparent;
+                    background-color: #E6EAC1;
+                    border: none;
+                    transition: background-color ease-in 0.3s;
+                }
+
+                .confirm:hover{
+                    background-color: #c8cca7;
+                }
+
+                .checkout-return{
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-                    gap: 0.3rem;
-        
-                    .order-item {
-                        list-style: none;
+                    gap: 0.4rem;
+                }
+            }
+
+            .checkout-form{
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+
+                .checkout-heading{
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5rem;
+
+                    .security{
+                        color: rgb(137, 135, 135);
                     }
                 }
             }
-        
-            .contact-info {
-                margin-top: 3.5rem;
-                margin-left: 3rem;
-                width: 40vw;
-                max-width: 40vw;
-                margin-bottom: 3.5rem;
-        
-                .initial-contact {
+
+            .top-level-details{
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                margin-bottom: 2rem;
+                border: 1.5px solid grey;
+                border-radius: 5px;
+                padding: 1rem;
+
+                .contact-details, .shipping-details{
                     display: flex;
-                    flex-direction: column;
-                    gap: 0.7rem;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    gap: 1rem;
+
                 }
-        
-                .disclaimer {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0.7rem;
-                }
-        
-                .info-form {
-                    display: flex;
-                    flex-direction: column;
-                    width: 100%;
-                    gap: 1.5rem;
-        
-        
-                    .shipping-info {
-                        display: flex;
-                        flex-direction: column;
-                        gap: 1rem;
-                        width: 100%;
-        
-                        .city-state-zip {
-                            display: flex;
-                            flex-direction: row;
-                            align-items: center;
-                            gap: 2.5rem;
-                        }
-        
-                        .first-last {
-                            display: flex;
-                            flex-direction: row;
-                            gap: 2.5rem;
-        
-                            .animated-input-div {
-                                width: 100%;
-                            }
-                        }
-                    }
-        
-                    .form-bottom-row {
+
+                .shipping-details{
+                    .shipping-info{
                         display: flex;
                         flex-direction: row;
-                        justify-content: space-between;
-        
-                        .return-cart {
-                            display: flex;
-                            flex-direction: row;
-                            align-items: center;
-                            gap: 0.4rem;
+
+                        .ship{
+                            width: 5rem;
+                            color: rgb(137, 135, 135);
                         }
-        
-                        .continue-button {
-                            padding: 1.5rem 1rem 1.5rem 1rem;
-                            letter-spacing: 0.15rem;
-                            border-radius: 8px;
-                            cursor: pointer;
-                            background: transparent;
-                            background-color: #E6EAC1;
-                            border: none;
-                            transition: background-color ease-in 0.3s;
+                    }
+                }
+
+                .contact-details{
+                    border-bottom: 1px solid grey;
+                    padding-bottom: 1rem;
+                    .contact-info{
+                        display: flex;
+                        flex-direction: row;
+                        
+                        .contact{
+                            width: 5rem;
+                            color: rgb(137, 135, 135);
                         }
-        
-                        .continue-button:hover {
-                            background-color: #c8cca7;
-                        }
-        
+                    }
+                }
+            }
+        }
+
+        .payment-head{
+            display: flex;
+            flex-direction: column;
+            padding-left: 3.5rem;
+            padding-top: 3.5rem;
+
+            gap: 1rem;
+            
+            .checkout-flow {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 0.3rem;
+    
+                .order-item {
+                    list-style: none;
                 }
             }
         }
     }
-    
-    .cart-side{
+
+    .cart-side {
         width: 100%;
         height: 100%;
         flex: 0 0 45.5%;
         position: relative;
-        
-        .cart-background{
+
+        .cart-background {
             position: fixed;
             border-left: 1.5px solid black;
             z-index: 0;
         }
 
-        .cart-wrapper{
+        .cart-wrapper {
             z-index: 1000;
             width: 45.5vw;
             height: 100vh;
             background-color: rgb(245, 240, 240, 0.75);
             position: fixed;
-            
 
-            .cart-overlay{
+
+            .cart-overlay {
                 margin: 3rem 3rem 0 3rem;
                 max-width: 100%;
                 display: flex;
                 flex-direction: column;
                 gap: 1rem;
 
-                .discount-input{
+                .discount-input {
                     display: flex;
                     flex-direction: row;
-                    gap: 2rem; 
-                    
-                    .discount-button{
+                    gap: 2rem;
+
+                    .discount-button {
                         padding: .5rem 1rem .5rem 1rem;
                     }
-                    .animated-input-div{
+
+                    .animated-input-div {
                         flex: 1 1 0;
                     }
                 }
 
-                .bottom-row{
+                .bottom-row {
                     margin-top: .5rem;
                     display: flex;
                     flex-direction: column;
                     gap: 1rem;
-                    .shipping, .taxes, .total{
+
+                    .shipping,
+                    .taxes,
+                    .total {
                         display: flex;
                         flex-direction: row;
                         justify-content: space-between;
                     }
 
-                    .total{
+                    .total {
                         align-items: center;
                     }
 
-                    .subtotal{
+                    .subtotal {
                         display: flex;
                         flex-direction: row;
                         justify-content: space-between;
-                        .subtotal-wrapper{
+
+                        .subtotal-wrapper {
                             display: flex;
                             flex-direction: row;
                             align-items: center;
@@ -178,16 +202,17 @@
                     overflow-y: auto;
                     z-index: 10000;
                     padding-top: 1.5rem;
+
                     .cart-item {
                         display: flex;
                         flex-direction: row;
                         gap: 0.5rem;
 
-                        .item-price{
+                        .item-price {
                             margin-left: 10rem;
                         }
 
-                        .item-info{
+                        .item-info {
                             display: flex;
                             flex-direction: column;
                             gap: .3rem;
@@ -198,7 +223,7 @@
                                 object-fit: cover;
                                 border-radius: 10%;
                             }
-            
+
                             .quantity-circle {
                                 width: 20px;
                                 height: 20px;
@@ -210,8 +235,8 @@
                                 position: relative;
                                 bottom: 4.7rem;
                                 left: 3.25rem;
-            
-            
+
+
                                 .quantity {
                                     color: white;
                                     font-size: 12px;

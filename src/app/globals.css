@@ -355,6 +355,7 @@
             letter-spacing: 0.25rem;
             background: transparent;
             border: none;
+            cursor: pointer;
             background-color: #BCECAC;
         }
     }

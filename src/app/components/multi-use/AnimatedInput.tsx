@@ -1,14 +1,25 @@
 import {AnimatePresence, motion} from 'framer-motion'
-import {ChangeEvent, useState} from 'react'
-export default function Component({label,  name, isRequired}: {label: string, name: string, isRequired: boolean}){
+import {useEffect, useState} from 'react'
+
+type Props = {
+    label: string, 
+    name: string, 
+    isRequired: boolean,
+    defaultValue: string
+}
+
+export default function Component({label,  name, isRequired, defaultValue}: Props){
     
     const [focused, setIsFocused] = useState(false)
     const [hasBeenFocused, setHasBeenFocused] = useState(false)
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState(defaultValue ? defaultValue : '');
     const showLabel = focused || value.length > 0
     const isEmpty = value.trim() === ''
     const [showError, setShowError] = useState(isEmpty && !focused && isRequired && hasBeenFocused);
 
+    useEffect(() => {
+        setValue(defaultValue ?? '')
+    }, [defaultValue])
 
     return(
         <div 
@@ -27,7 +38,7 @@ export default function Component({label,  name, isRequired}: {label: string, na
                 }}
                 initial={false}
                 animate={{
-                    y: showLabel ? -15: 0,
+                    y: showLabel ? -12: 0,
                     scale: showLabel ? 0.8: 1,
                     opacity: showLabel ? 0.8 : 1
                 }}
@@ -40,7 +51,7 @@ export default function Component({label,  name, isRequired}: {label: string, na
                 name={name}
                 style={{
                     width: '100%',
-                    padding: '20px 0 8px 12px',
+                    padding: '20px 12px 8px 12px',
                     fontSize: '16px',
                     border: `1px solid ${showError ? 'red' : '#ccc'}`,
                     borderRadius: "4px",
@@ -61,6 +72,7 @@ export default function Component({label,  name, isRequired}: {label: string, na
                     e.preventDefault()
                     setShowError(true)
                 }}
+                value={value}
             />   
             <AnimatePresence>
                 {showError && 

@@ -3,12 +3,14 @@ import {useEffect, useRef} from 'react'
 import Image from 'next/image'
 import {motion, AnimatePresence} from 'framer-motion'
 import { useCartStore } from '@/app/stores/useCartStore'
+import { useRouter } from 'next/navigation'
 
 export default function Component({cartOpen, handleCartClicked} : {cartOpen: boolean, handleCartClicked: () => void}){
     
     const {items: cart} = useCartStore();
 
     const cartRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
 
     useEffect(() => {
 
@@ -121,7 +123,7 @@ export default function Component({cartOpen, handleCartClicked} : {cartOpen: boo
                                 <p className="subtotal-amount">{getSubtotal()} USD</p>
                             </div>
                             <p className="subtotal-additional">Shipping, taxes, and discount codes calculated at checkout.</p>
-                            <button className="cart-checkout-button">CHECK OUT</button>
+                            <button onClick={() => router.push('/checkout/information')} className="cart-checkout-button">CHECK OUT</button>
                         </motion.div>
                     </>
                 }

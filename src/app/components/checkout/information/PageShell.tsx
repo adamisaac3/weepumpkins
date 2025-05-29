@@ -1,7 +1,7 @@
 'use client'
 
 import InformationForm from "./Information"
-import CartSide from "./CartSide"
+import CartSide from "../../multi-use/CheckoutCartSide"
 export default function PageShell(){
     return(
         <>

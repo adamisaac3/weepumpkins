@@ -4,6 +4,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import { useEffect, useState } from 'react'
 import { useCartStore } from '@/app/stores/useCartStore'
+import CheckoutCartSide from '../../multi-use/CheckoutCartSide'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
 
@@ -56,15 +57,19 @@ export default function PageShell(){
 
     return (
         <>
-            {clientSecret && 
-                <Elements stripe={stripePromise} options={{
-                    clientSecret,
-    
-                }}>
-                    <PaymentSide />
-                </Elements>
-            }
+            <section className="checkout-main">
+                <div className="payment-side">
+                    {clientSecret && 
+                        <Elements stripe={stripePromise} options={{
+                            clientSecret,
             
+                        }}>
+                            <PaymentSide />
+                        </Elements>
+                    }
+                </div>
+                <CheckoutCartSide />
+            </section>
         </>
     )
 }

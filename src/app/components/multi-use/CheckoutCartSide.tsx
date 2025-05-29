@@ -1,6 +1,6 @@
 import { useCartStore } from '@/app/stores/useCartStore';
 import Image from 'next/image'
-import AnimatedInput from '../../multi-use/AnimatedInput'
+import AnimatedInput from './AnimatedInput'
 export default function CartSide(){
     
     const {items: cart} = useCartStore();
@@ -19,7 +19,7 @@ export default function CartSide(){
         
         return hasDecimal(subtotal) ? `$ ${subtotal}` : `$ ${subtotal.toFixed(2)}`;
     }
-
+    const subtotal = getSubtotal();
     return(
         <div className="cart-side">
             <Image width={575} height={600} src="/checkout-cart-background.png" className="cart-background" alt="background art" />
@@ -48,7 +48,7 @@ export default function CartSide(){
                     </div>
                     <div className="discount-input">
                         <AnimatedInput isRequired={false} name="discount" label={'Discount code or gift cart'} />
-                        <button>Apply</button>
+                        <button className="discount-button">Apply</button>
                     </div>
                     <div className="bottom-row">
                         <div className="subtotal">
@@ -59,19 +59,16 @@ export default function CartSide(){
                                 </svg>
                                 <p>{cart.length} {cart.length > 1 ? 'items' : 'item'}</p>
                             </div>
-                            <p>{getSubtotal()} USD</p>
+                            <p>{subtotal} USD</p>
                         </div>
                         <div className="shipping">
                             <p>Shipping</p>
                             <p>FREE SHIPPING!!</p>
                         </div>
-                        <div className="taxes">
-                            <p>Estimated taxes</p>
-                            <p>Calculated at next step</p>
-                        </div>
+                
                         <div className="total">
                             <h2>Total</h2>
-                            <p>Calculate total</p>
+                            <p>{subtotal} USD</p>
                         </div>
                     </div>
                 </div>
