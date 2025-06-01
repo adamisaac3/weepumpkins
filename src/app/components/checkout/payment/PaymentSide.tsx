@@ -15,7 +15,7 @@ export default function Component(){
 
         if(!stripe || !elements) return;
 
-        const {paymentIntent, error} = await stripe.confirmPayment({
+        const {error} = await stripe.confirmPayment({
             elements,
             confirmParams: {
                 payment_method_data: {
