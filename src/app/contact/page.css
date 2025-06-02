@@ -17,6 +17,20 @@ main{
             flex-direction: column;
             gap: 1rem;
 
+            .success{
+                border: 1.5px solid green;
+                padding: 5px;
+                background-color: rgb(144, 238, 144, .4);
+                color: green;
+            }
+
+            .error{
+                border: 1.5px solid red;
+                padding: 5px; 
+                background-color: rgb(255, 0, 0, .2);
+                color: red;
+            }
+
             .submit{
                 display: flex;
                 align-self: center;

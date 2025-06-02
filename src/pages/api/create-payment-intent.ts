@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method !== 'POST'){
         return res.status(405).json({error: "ERROR"})
     }
-    console.log('secret key ' + process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string)
+
     const {items} = req.body;
 
     const db = await createAdminClient();

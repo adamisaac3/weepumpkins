@@ -77,7 +77,7 @@ export default function Component({label,  name, isRequired, defaultValue}: Prop
             <AnimatePresence>
                 {showError && 
                     <span>
-                        <p key="error" style={{color: 'red', paddingTop: '10px'}}>Enter {name.toLowerCase()}</p>
+                        <p key="error" style={{color: 'red', paddingTop: '10px'}}>Enter {label.toLowerCase()}</p>
                     </span>
                 }
             </AnimatePresence>

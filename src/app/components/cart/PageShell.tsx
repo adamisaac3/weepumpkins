@@ -4,7 +4,9 @@ import Footer from "../footer/Footer"
 import {useState, useEffect} from 'react'
 import { CartItem } from "@/app/types/types"
 import AnimatedLink from "../multi-use/AnimatedLink"
+import { useCartStore } from "@/app/stores/useCartStore"
 import {motion} from 'framer-motion'
+import { useRouter } from "next/navigation"
 import Image from "next/image"
 
 
@@ -13,23 +15,13 @@ export default function PageShell(){
     const [searchOpen, setSearchOpen] = useState(false)
     const [cartOpen, setCartOpen] = useState(false)
     const [cart, setCart] = useState<CartItem[]>()
+    const {items, removeCartItem} = useCartStore();
+    const router = useRouter();
+
 
     useEffect(() => {
-        const fetchCart = async () => {
-            const response = await fetch('/api/get-cart');
-            const data = await response.json()
-
-
-            if (response.ok) {
-
-                if (!data['noCart'] && Array.isArray(data)) {
-                    const cartParam = data.map((row: CartItem) => row);
-                    setCart(cartParam);
-                }
-            }
-        }
-        fetchCart()
-    }, [])
+        setCart(items)
+    }, [items])
 
     function hasDecimal(num: number){
         return num % 1 !== 0;
@@ -89,6 +81,7 @@ export default function PageShell(){
                                                 </div>
                                                 <p>$ {hasDecimal(row.price) ? row.price : row.price.toFixed(2)}</p>
                                             </div>
+                                            <button className="remove-item" onClick={() => removeCartItem(row.product_id)}>Remove</button>
                                         </div>
                                     </motion.div>
                                 )
@@ -107,7 +100,7 @@ export default function PageShell(){
                                         <p className="subtotal-amount">{getSubtotal()} USD</p>
                                     </div>
                                     <p className="subtotal-additional">Shipping, taxes, and discount codes calculated at checkout.</p>
-                                    <button className="cart-checkout-button">CHECK OUT</button>
+                                    <button className="cart-checkout-button" onClick={() => router.push('/checkout/information')}>CHECK OUT</button>
                             </motion.div>
                         }
                 </div>

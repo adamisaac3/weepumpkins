@@ -4,11 +4,7 @@ import AnimatedLink from "../../multi-use/AnimatedLink";
 import AnimatedInput from '../../multi-use/AnimatedInput'
 import {useRef} from 'react'
 import { useRouter } from "next/navigation";
-
-function continueToPayment(){
-    window.location.href = "/checkout/payment"
-}
-
+import initCheckoutStore from "../../multi-use/initCheckoutStore";
 
 export default function InformationForm(){
     const {email, country, apartment, city, state, zipcode, first_name, last_name, address, setCheckoutInfo, phone} = useCheckoutStore();
@@ -19,6 +15,9 @@ export default function InformationForm(){
 
     const formRef = useRef<HTMLFormElement>(null);
     const router = useRouter();
+
+    initCheckoutStore();
+
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
 

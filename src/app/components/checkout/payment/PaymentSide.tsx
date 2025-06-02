@@ -2,15 +2,19 @@
 import Image from "next/image"
 import { useCheckoutStore } from "@/app/stores/useCheckoutStore";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 
 export default function Component(){
-    const {company, email, country, first_name, last_name, address, apartment, city, state, zipcode, phone} = useCheckoutStore();
+    const {company, email, country, address, apartment, city, state, zipcode} = useCheckoutStore();
     const stripe = useStripe();
     const elements = useElements();
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    
+    const errorRef = useRef<HTMLDivElement>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
+        setLoading(true)
         e.preventDefault();
 
         if(!stripe || !elements) return;
@@ -21,9 +25,19 @@ export default function Component(){
                 payment_method_data: {
                     billing_details: { name: 'customer name' }
                 },
-                return_url: ""
+                return_url: "http://localhost:3000/checkout/confirm"
             }
-        })
+        }) 
+
+        if(error){
+            console.log('an error occured during payment.')
+            setError(error.message ?? "An error as occured")
+            
+            setTimeout(() => {
+                errorRef.current?.scrollIntoView({behavior: 'smooth', block: 'center'})
+            }, 1)
+        }
+        setLoading(false)
     }
     
     return(
@@ -78,27 +92,33 @@ export default function Component(){
                             <p className="security">All transactions are secure and encrypted.</p>
                         </div>
                         <form className="payment-element" onSubmit={(e) => handleSubmit(e)}>
+                            {error && 
+                                <div className="error" ref={errorRef}>
+                                    <p className="error-message">{error}</p>
+                                </div>
+                            }
+                            
                             <PaymentElement />
-                        </form>
-                    </div>
 
-                    <div className="bottom-row">
-                        <div className="checkout-return">
-                            <svg fill="#000000" height="10px" width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" 
-                                    viewBox="0 0 512.006 512.006" xmlSpace="preserve">
-                                <g>
-                                    <g>
-                                        <path d="M388.419,475.59L168.834,256.005L388.418,36.421c8.341-8.341,8.341-21.824,0-30.165s-21.824-8.341-30.165,0
-                                            L123.586,240.923c-8.341,8.341-8.341,21.824,0,30.165l234.667,234.667c4.16,4.16,9.621,6.251,15.083,6.251
-                                            c5.461,0,10.923-2.091,15.083-6.251C396.76,497.414,396.76,483.931,388.419,475.59z"/>
-                                    </g>
-                                </g>
-                            </svg>
-                            <a href="/checkout/information">
-                                <p>Return to information</p>
-                            </a>
-                        </div>
-                        <button className="confirm" type="submit">Confirm Payment</button>
+                            <div className="bottom-row">
+                                <div className="checkout-return">
+                                    <svg fill="#000000" height="10px" width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" 
+                                            viewBox="0 0 512.006 512.006" xmlSpace="preserve">
+                                        <g>
+                                            <g>
+                                                <path d="M388.419,475.59L168.834,256.005L388.418,36.421c8.341-8.341,8.341-21.824,0-30.165s-21.824-8.341-30.165,0
+                                                    L123.586,240.923c-8.341,8.341-8.341,21.824,0,30.165l234.667,234.667c4.16,4.16,9.621,6.251,15.083,6.251
+                                                    c5.461,0,10.923-2.091,15.083-6.251C396.76,497.414,396.76,483.931,388.419,475.59z"/>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                    <a href="/checkout/information">
+                                        <p>Return to information</p>
+                                    </a>
+                                </div>
+                                <button className="confirm" type="submit" disabled={loading}>Confirm Payment</button>
+                            </div>
+                        </form>
                     </div>
                 </section>
             </div>

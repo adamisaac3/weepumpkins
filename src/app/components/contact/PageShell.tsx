@@ -2,18 +2,25 @@
 import Header from "../header/Header";
 import Footer from '../footer/Footer'
 import Image from "next/image";
+import FormInput from "./FormInput";
 import { useState } from "react";
 
 export default function ContactPageShell(){
     const [navOpen, setNavOpen] = useState<boolean>(false)
     const [cartOpen, setCartOpen] = useState<boolean>(false);
     const [searchOpen, setSearchOpen] = useState<boolean>(false);
-
+    const [success, setSuccess] = useState<boolean>(false);
+    const [error, setError] = useState(false);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
 
         const form = e.currentTarget;
+
+        if(!form.checkValidity()){
+            return;
+        }
+        
         const formData = new FormData(form)
 
         try{
@@ -25,10 +32,16 @@ export default function ContactPageShell(){
                 }
             })
             
-
+            if(response.ok){
+                setError(false);
+                setSuccess(true)
+                form.reset();
+                return;
+            }
+            setError(true);
         }
         catch(error){
-            alert((error as Error).message)
+            setError(true)
         }
     }
 
@@ -87,15 +100,26 @@ export default function ContactPageShell(){
                     </div>
 
                     <form className="contact-form" onSubmit={(e) => handleSubmit(e)} action="https://formsubmit.co/a3c1ab48ad53363dd32b98c6f65931a8" method="post" >
+                        {success && 
+                            <div className="success">
+                                <p className="success-message">Thank you for contacting me. I will get back to you as soon as possible!!</p>
+                            </div>
+                        }
+
+                        {error && 
+                            <div className="error">
+                                <p className="error-message">An error has occured. Please try again.</p>
+                            </div>
+                        }
                         <div className="top-row">
                             <div className='element'>
                                 <label className="label" htmlFor="name">NAME</label>
-                                <input className="name input" name="name"></input>
+                                <FormInput name="name" className='name input' type="text" />
                             </div>
 
                             <div className="element">
                                 <label className="label" htmlFor="email">EMAIL</label>
-                                <input className="email input" name="email" type="email"></input>
+                                <FormInput name={'email'} className='email input' type='email' />
                             </div>
                         </div>
                         <div className="element">
