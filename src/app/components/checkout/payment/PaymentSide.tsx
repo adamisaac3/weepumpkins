@@ -5,7 +5,7 @@ import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { useState, useRef } from "react";
 
 export default function Component(){
-    const {company, email, country, address, apartment, city, state, zipcode} = useCheckoutStore();
+    const {company, email, country, first_name, last_name, address, apartment, city, state, zipcode, phone} = useCheckoutStore();
     const stripe = useStripe();
     const elements = useElements();
     const [loading, setLoading] = useState(false);
@@ -23,7 +23,11 @@ export default function Component(){
             elements,
             confirmParams: {
                 payment_method_data: {
-                    billing_details: { name: 'customer name' }
+                    billing_details: { 
+                        name: `${first_name} ${last_name}`,
+                        email: email,
+                        phone: phone ?? null
+                    }
                 },
                 return_url: "http://localhost:3000/checkout/confirm"
             }

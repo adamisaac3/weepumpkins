@@ -5,6 +5,8 @@ import { Elements } from '@stripe/react-stripe-js'
 import { useEffect, useState } from 'react'
 import { useCartStore } from '@/app/stores/useCartStore'
 import CheckoutCartSide from '../../multi-use/CheckoutCartSide'
+import { useCheckoutStore } from '@/app/stores/useCheckoutStore'
+import initCheckoutStore from '../../multi-use/initCheckoutStore'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
 
@@ -33,6 +35,9 @@ export default function PageShell(){
 
     const hydrated = initCart();
 
+    initCheckoutStore();
+    const {email, country, first_name, last_name, address, apartment, city, state, zipcode, phone} = useCheckoutStore();
+
     useEffect(() => {
 
         if(!hydrated || items.length === 0){
@@ -43,15 +48,26 @@ export default function PageShell(){
             const response = await fetch('/api/create-payment-intent', {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({items: items.map((i) => i.product_id)}),
+                body: JSON.stringify({items: items.map((i) => i.product_id), 
+                    email: email,
+                    country: country, 
+                    first_name: first_name, 
+                    last_name: last_name,
+                    address: address,
+                    apartment: apartment,
+                    city: city,
+                    state: state,
+                    zip: zipcode,
+                    phone: phone
+                    }),
             })
             const {client_secret: clientSecret} = await response.json();
-
 
             if(response.ok){
                 setClientSecret(clientSecret);
             }
         }
+        
         fetchPaymentIntent();
     }, [hydrated, items])
 

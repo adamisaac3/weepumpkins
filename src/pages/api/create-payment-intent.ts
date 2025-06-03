@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(405).json({error: "ERROR"})
     }
 
-    const {items} = req.body;
+    const {items, email, country, first_name, last_name, address, apartment, city, state, zip, phone} = req.body;
 
     const db = await createAdminClient();
 
@@ -28,6 +28,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             amount: finalPrice,
             currency: 'usd',
             automatic_payment_methods: {enabled: true},
+            metadata: {
+                email: email,
+                country: country,
+                first: first_name,
+                last: last_name,
+                addr: address,
+                apt: apartment,
+                city: city,
+                state: state,
+                zip: zip,
+                phone: phone
+            }
         })
         
         return res.status(200).json({client_secret: paymentIntent.client_secret})
