@@ -87,6 +87,8 @@
         
                         .continue-button {
                             padding: 1.5rem 1rem 1.5rem 1rem;
+                            width: 202.94;
+                            height: 64;
                             letter-spacing: 0.15rem;
                             border-radius: 8px;
                             cursor: pointer;
@@ -94,6 +96,9 @@
                             background-color: #E6EAC1;
                             border: none;
                             transition: background-color ease-in 0.3s;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
                         }
         
                         .continue-button:hover {

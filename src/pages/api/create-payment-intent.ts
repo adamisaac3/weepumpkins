@@ -29,6 +29,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             currency: 'usd',
             automatic_payment_methods: {enabled: true},
             metadata: {
+                item_ids: items.join(','),
+                price: totalPrice,
                 email: email,
                 country: country,
                 first: first_name,

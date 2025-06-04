@@ -28,6 +28,11 @@
                     background-color: #E6EAC1;
                     border: none;
                     transition: background-color ease-in 0.3s;
+                    width: 171.9;
+                    height: 64;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
 
                 .confirm:hover{

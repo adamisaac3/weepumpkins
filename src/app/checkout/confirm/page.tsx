@@ -1,13 +1,10 @@
-import { useRouter } from "next/router"
-
+import ConfirmPageShell from "@/app/components/checkout/confirm/PageShell";
 
 export default function ConfirmPage(){
     
-    const router = useRouter();
-    const {payment_intent} = router.query
-    
-    
     return(
-        <p>Confirm page</p>
+        <>
+            <ConfirmPageShell />
+        </>
     )
 }

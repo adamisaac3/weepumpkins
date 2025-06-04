@@ -3,6 +3,9 @@ import Image from "next/image"
 import { useCheckoutStore } from "@/app/stores/useCheckoutStore";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useState, useRef } from "react";
+import Spinner from '../../multi-use/Spinner'
+import { useRouter } from "next/navigation";
+import { AddressElement } from "@stripe/react-stripe-js";
 
 export default function Component(){
     const {company, email, country, first_name, last_name, address, apartment, city, state, zipcode, phone} = useCheckoutStore();
@@ -10,6 +13,12 @@ export default function Component(){
     const elements = useElements();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+
+    const router = useRouter()
+
+    if(!(email && country && first_name && last_name &&address && city && state && zipcode)){
+        router.push('/checkout/information')
+    }
     
     const errorRef = useRef<HTMLDivElement>(null);
 
@@ -44,6 +53,17 @@ export default function Component(){
         setLoading(false)
     }
     
+    const testLoading = async (e: React.FormEvent) => {
+        setLoading(true)
+        e.preventDefault();
+
+        const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+        await sleep(30000);
+
+        setLoading(false)
+    }
+
     return(
         <>
             <div className="payment-side">
@@ -67,7 +87,7 @@ export default function Component(){
                         </li>
                     </menu>
                 </header>
-                <section className="checkout-details">
+                <section className="checkout-details">                    
                     <div className="top-level-details">
                         <div className="contact-details">
                             <div className="contact-info">
@@ -95,7 +115,7 @@ export default function Component(){
                             <h2>Payment</h2>
                             <p className="security">All transactions are secure and encrypted.</p>
                         </div>
-                        <form className="payment-element" onSubmit={(e) => handleSubmit(e)}>
+                        <form className="payment-element" onSubmit={(e) => testLoading(e)}>
                             {error && 
                                 <div className="error" ref={errorRef}>
                                     <p className="error-message">{error}</p>
@@ -120,9 +140,24 @@ export default function Component(){
                                         <p>Return to information</p>
                                     </a>
                                 </div>
-                                <button className="confirm" type="submit" disabled={loading}>Confirm Payment</button>
+                                <button className="confirm" type="submit" disabled={loading}>
+                                    {loading && 
+                                        <Spinner />
+                                    }
+                                    {!loading && 
+                                        <p>Confirm Payment</p>
+                                    }
+                                    
+                                </button>
                             </div>
                         </form>
+
+                        <div className="billing-address">
+                            <div className="billing-headers">
+                                <h2 className="billing-header">Billing Address</h2>
+                                <p>Select the address that matches your card or payment method</p>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>
