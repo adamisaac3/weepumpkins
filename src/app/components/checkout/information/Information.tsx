@@ -6,15 +6,11 @@ import {useRef, useState} from 'react'
 import { useRouter } from "next/navigation";
 import initCheckoutStore from "../../multi-use/initCheckoutStore";
 import Spinner from '../../multi-use/Spinner'
-import { AddressElement, Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-
-const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 export default function InformationForm(){
-    const {email, country, apartment, city, state, zipcode, first_name, last_name, address, setCheckoutInfo, phone} = useCheckoutStore();
+    const {email, country, company, apartment, city, state, zipcode, first_name, last_name, address, setCheckoutInfo, phone} = useCheckoutStore();
     const [loading, setLoading] = useState(false);
-    console.log(process.env.STRIPE_PUBLISHABLE_KEY!)
+
     const handleInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCheckoutInfo({[e.target.name]: e.target.value})
     }
@@ -24,7 +20,7 @@ export default function InformationForm(){
 
     initCheckoutStore();
 
-    const handleSubmit: React.FormEventHandler<HTMLFormElement> = e => {
+    const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
         setLoading(true);
         e.preventDefault();
 
@@ -81,7 +77,10 @@ export default function InformationForm(){
                 <form ref={formRef} onSubmit={handleSubmit} className="info-form">
                     <div className="initial-contact">
                         <h2>Contact</h2>
-                        <AnimatedInput defaultValue={email} label="Email" isRequired={true} name="email" />
+                        <div className="email-phone">
+                            <AnimatedInput defaultValue={email} label="Email" isRequired={true} name="email" />
+                            <AnimatedInput defaultValue={phone} label="Phone Number (Optional)" isRequired={false} name="phone" />
+                        </div>
                     </div>
                     <div className="disclaimer">
                         <h2>Delivery Disclaimer</h2>
@@ -89,31 +88,23 @@ export default function InformationForm(){
                             Currently shipping is only available to locations within the United States.
                             If you wish for international shipping please <AnimatedLink href="/contact" linkText="contact me" />
                         </p>
+                        <p>For any other additional delivery information please reach out with the order id.</p>
                     </div>
-                    <Elements stripe={stripe}>
-                        <AddressElement 
-                            options={{
-                                mode: 'shipping',
-                                display: {
-                                    name: "split"
-                                },
-                                defaultValues: {
-                                    firstName: first_name,
-                                    lastName: last_name,
-                                    address: {
-                                        line1: address,
-                                        line2: apartment,
-                                        city: city,
-                                        state: state,
-                                        postal_code: zipcode,
-                                        country: country
-                                    }
-                                }
-                            }}
-                            
-                        />
-                    </Elements>
-                    <AnimatedInput defaultValue={phone} label="Phone (optional)" isRequired={false} name="phone"/>
+                    <div className="shipping-info">
+                        <AnimatedInput defaultValue={country} label="Country" isRequired={true} name="country" />
+                        <div className="first-last">
+                            <AnimatedInput defaultValue={first_name} label="First name" isRequired={true} name="first_name" />
+                            <AnimatedInput defaultValue={last_name} label="Last name" isRequired={true} name="last_name" />
+                        </div>
+                        <AnimatedInput defaultValue={address} label="Address" isRequired={true} name="address" />
+                        <AnimatedInput defaultValue={company} label="Company (Optional)" isRequired={false} name="company" />
+                        <AnimatedInput defaultValue={apartment} name="apartment" isRequired={false} label="Apartment (Optional)" />
+                        <div className="city-state-zip">
+                            <AnimatedInput defaultValue={city} name="city" isRequired={true} label="City" />
+                            <AnimatedInput defaultValue={state} name="state" isRequired={true} label="State/Region" />
+                            <AnimatedInput defaultValue={zipcode} name="zipcode" isRequired={true} label="ZIP/Postal code" />
+                        </div>
+                    </div>
                     <div className="form-bottom-row">
                         <a href="/cart" className="return-cart">
                             <svg fill="#000000" height="10px" width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" 

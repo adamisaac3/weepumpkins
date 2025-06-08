@@ -21,11 +21,10 @@ export default async function StripeHandler(req: NextApiRequest, res: NextApiRes
     const buf = await buffer(req);
 
     let event: Stripe.Event;
-    let db;
 
     try{
         event = stripe.webhooks.constructEvent(buf, sig!, process.env.STRIPE_WEBHOOK_KEY!)
-        db = await createAdminClient();
+        
     }
     catch(error){
         console.log(error);
@@ -33,6 +32,8 @@ export default async function StripeHandler(req: NextApiRequest, res: NextApiRes
     }
 
     if(event.type === 'payment_intent.succeeded'){
+        const db = await createAdminClient();
+
         const paymentIntent = event.data.object as Stripe.PaymentIntent;
         const {error} = await db.rpc('insert_order', {
             order_payment_intent: paymentIntent.id,

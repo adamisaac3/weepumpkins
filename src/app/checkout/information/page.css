@@ -34,6 +34,16 @@
                     display: flex;
                     flex-direction: column;
                     gap: 0.7rem;
+
+                    .email-phone{
+                        display: flex;
+                        flex-direction: row;
+                        gap: 2.5rem;
+
+                        .animated-input-div {
+                            width: 100%;
+                        }
+                    }
                 }
         
                 .disclaimer {

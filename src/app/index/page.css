@@ -1,6 +1,9 @@
 *{
     font-family: 'Asul', serif;
 }
+main{
+    background-color: #f0fff0;
+}
 .new-arrivals {
 
     display: flex;
@@ -56,6 +59,7 @@
     .next-upcoming-banner{
         align-self: center;
         padding: 6rem 0;
+        
     }
 
     .recent-event-div {
@@ -66,14 +70,19 @@
         align-items: center;
         gap: 3rem;
         padding: 1rem 5rem;
-        background: #f6e6db;
-        box-shadow: 0 2px 4px rgba(0,0,0,1);
-        border: 2px solid black;
+        background-color: #c8e6c8;
+        box-shadow: 0 2px 4px white;
+        border: 1.5px solid white;
         
+        *{
+            background-color: #c8e6c8;
+        }
+
         .recent-event-info {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+            background-color: #c8e6c8;
 
             .recent-info-top, .recent-info-middle, .recent-info-bottom {
                 display: flex;

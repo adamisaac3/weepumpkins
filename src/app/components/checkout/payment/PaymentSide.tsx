@@ -115,7 +115,7 @@ export default function Component(){
                             <h2>Payment</h2>
                             <p className="security">All transactions are secure and encrypted.</p>
                         </div>
-                        <form className="payment-element" onSubmit={(e) => testLoading(e)}>
+                        <form className="payment-element" onSubmit={(e) => handleSubmit(e)}>
                             {error && 
                                 <div className="error" ref={errorRef}>
                                     <p className="error-message">{error}</p>
