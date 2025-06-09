@@ -12,6 +12,7 @@ export default function Spinner(){
                 borderTop: '4px solid #000',
                 borderRadius: '50%',
             }}
+            className="animated-spinner"
         >
 
         </motion.div>

@@ -32,18 +32,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).json({error: "invalid payment intent"})
         }
 
-        const {data: orderDetails, error} = await db.from('orders').select('*').eq('payment_intent', payment_intent).single();
+        const {data, error} = await db.rpc('get_order', {req_payment: payment_intent})
         
-        if(!error && orderDetails){
-
-            const {data: itemDetails, error: itemsError} = await db.from('order_items').select('*').eq('order_id', orderDetails['id'])
-
-            
-            const order: Order = {
-                payment_intent: data.
-            }
+        if(!error){
             return res.status(200).json(data)
         }
+
         return res.status(400).json({error: 'Error'})
     }
     catch(err){

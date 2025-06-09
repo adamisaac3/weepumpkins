@@ -17,7 +17,7 @@ export default function Header({navOpen, setNavOpen, cartOpen, setCartOpen, sear
     const handleSearchClicked = useCallback(() => setSearchOpen((open) => !open), [setSearchOpen]);
     
     const router = usePathname();
-    const isCartPage = (router === '/cart' || router?.startsWith('/checkout'))
+    const isCartPage = (router === '/cart')
 
     useInitNavbar();
     

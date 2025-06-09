@@ -1,45 +1,22 @@
 'use client'
-import { notFound, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react";
-
-type Order = {
-    payment_intent: string,
-    price: number,
-    name: string,
-    email: string,
-    country: string,
-    address: string,
-    apartment: string,
-    city: string,
-    state: string,
-    zipcode: string,
-    phone: string,
-    ordered_at: string
-}
+import { useState } from "react";
+import Header from "../../header/Header";
+import Footer from "../../footer/Footer";
+import OrderInformation from './OrderInformation'
 
 export default function ConfirmPageShell(){
-    const searchParams = useSearchParams();
-    const payment_intent = searchParams?.get('payment_intent')
-    const [order, setOrder] = useState<Order>()
-    
-    setTimeout(() => {
-        useEffect(() => {
-            const fetchOrder = async () => {
-                const response = await fetch(`/api/get-order?payment_intent=${payment_intent}`)
-                const data = await response.json()
-
-                if(response.ok){
-                    const order: Order = data.map(() => {
-                        
-                    })
-                }
-            }
-
-            fetchOrder();
-        }, [])
-    }, 100)
+    const [navOpen, setNavOpen] = useState<boolean>(false);
+    const [cartOpen, setCartOpen] = useState<boolean>(false);
+    const [searchOpen, setSearchOpen] = useState<boolean>(false);
 
     return (
-        <p>{payment_intent}</p>
+        <>
+            <Header searchOpen={searchOpen} setSearchOpen={setSearchOpen} cartOpen={cartOpen} setCartOpen={setCartOpen} navOpen={navOpen} setNavOpen={setNavOpen}/>
+            <main className={`${(navOpen || cartOpen || searchOpen) ? 'main-content-blurred' : ''}`}>
+                <OrderInformation />
+            </main>
+            <Footer navOpen={navOpen}/>
+            
+        </>
     )
 }

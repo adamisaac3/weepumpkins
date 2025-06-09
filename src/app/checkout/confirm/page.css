@@ -1,0 +1,133 @@
+*{
+    font-family: 'Figtree', sans-serif;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4rem;
+    background-color: rgb(200, 230, 200, .65);
+
+    .order-confirmation{
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        width: 100%;
+
+
+        .animated-spinner{
+            align-self: center;
+            margin-top: 5rem;
+        }
+
+        .recommendations{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .recom-head{
+                letter-spacing: 0.1rem;
+            }
+        }
+
+        .feedback{
+            background-color: rgb(240,255,240);
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+            
+            .feedback-form{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                
+                gap: 1.7rem;
+
+
+                .form-submit{
+                    padding: 1rem 1.5rem 1rem 1.5rem;
+                    letter-spacing: .1rem;
+                    cursor: pointer;
+                    background: transparent;
+                    border: none;
+
+                    background-color: #95b395;
+                }
+
+                .main-head{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .form-input{
+                    align-self: auto;
+                    padding-left: .5rem;
+                    padding-top: .5rem;
+                    width: 35%;
+                    height: 5rem;
+
+                    outline: none;
+                    border: 1.5px solid rgb(0, 0, 0, .5);
+                }
+            }
+        }
+
+        .order{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3.5rem;
+            width: 100%;
+
+
+            .order-delivery{
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+
+                .delivery-info{
+                    display: flex;
+                    flex-direction: row;
+                    gap: 4.4px;
+
+                    .estimated-dates{
+                        font-weight: bold;
+                    }
+                }
+
+                .delivery-date{
+                    display: flex;
+                    flex-direction: row;
+                }
+            }
+
+            .order-number{
+                display: flex;
+                flex-direction: row;
+                gap: 3rem;
+                align-items: center;
+
+                .order-num{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    
+                    .number{
+                        font-weight: bolder;
+                        letter-spacing: .05rem;
+                        color: #6e8f92;
+                    }
+
+                    .order-id{
+                        font-weight: bold;
+                        color: #2f4858;
+                    }
+                }
+            }
+        }
+
+    }
+    
+}

@@ -1,0 +1,111 @@
+main{
+    padding-left: 3rem;
+    padding-right: 3rem;
+    background-color: rgb(240,255,240);
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+
+    .order{
+        background-color:#c8e6c8;
+
+        .order-info, .shipment, .bottom-row{
+            padding-left: 1rem;
+        }
+
+        .shipment{
+
+            .bottom-row{
+                display: flex;
+                flex-direction: column;
+                margin-top: 1.5rem;
+                .price{
+                    display: flex;
+                    flex-direction: row;
+                    gap: .3rem;
+                    font-size: larger;
+                }
+
+                .bottom-btn{
+                    align-self: flex-end;
+                    margin-right: 1rem;
+                    margin-bottom: 1rem;
+                    padding: 1rem;
+                    cursor: pointer;
+                }
+            }
+
+            .shipment-head{
+                display: flex;
+                flex-direction: column;
+                gap: .5rem;
+                margin-bottom: 2rem;
+
+                h3{
+                    font-size: medium;
+                    font-weight: 500;
+                }
+            }
+            .order-items{
+                display: flex;
+                flex-direction: column;
+                margin-right: 1rem;     
+                background-color: rgb(240,255,240);
+                gap: .7rem;
+
+                .item{
+                    display: flex;
+                    flex-direction: row;
+                    gap: 2rem;
+                    padding-left: 1.5rem;
+                    padding-top: 1rem;
+                    padding-bottom: 1rem;
+
+                    .item-info{
+                        display: flex;
+                        flex-direction: column;
+                        gap: .5rem;
+                    }
+
+                    .item-image{
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+
+        .order-info{
+            padding-top: 1rem;
+            margin-bottom: 2.5rem;
+            .order-shipping{
+                display: flex;
+                flex-direction: column;
+                gap: .7rem;
+
+                .order-loc{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+            }
+        }
+    }
+
+    .animated-spinner{
+        margin-top: 3rem;
+        align-self: center;
+    }
+    .thank-you{
+        padding-left: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 3rem;
+        display: flex;
+        flex-direction: column;
+        gap: .7rem;
+
+        .other-thanks, .scissors{
+            font-size: medium;
+            font-weight:500;
+        }
+    }
+}

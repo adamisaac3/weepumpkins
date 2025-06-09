@@ -1,10 +1,7 @@
 'use client'
 import DisclaimerButton from './DisclaimerButton'
 import CartButton from './CartButton'
-import {AddItemHandler} from './AddItemToCart'
 import { CartItem } from '@/app/types/types'
-import React from 'react'
-
 
 function hasDecimal(num: number){
     return num % 1 !== 0
@@ -21,6 +18,7 @@ export default function Component({item, thumbnail, setCartOpen, cartOpen} : {ca
         image_path: thumbnail,
         category_id: item.categoryid
     }
+    
 
     return (
         <div className="item-details-div">
