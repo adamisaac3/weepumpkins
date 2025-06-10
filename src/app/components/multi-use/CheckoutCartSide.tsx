@@ -1,10 +1,9 @@
 import { useCartStore } from '@/app/stores/useCartStore';
 import Image from 'next/image'
 import AnimatedInput from './AnimatedInput'
-export default function CartSide(){
+import { CartItem } from '@/app/types/types';
+export default function CartSide({cart}: {cart: CartItem[]}){
     
-    const {items: cart} = useCartStore();
-
     function hasDecimal(num: number){
         return num % 1 !== 0;
     }
@@ -47,7 +46,7 @@ export default function CartSide(){
                     }
                     </div>
                     <div className="discount-input">
-                        <AnimatedInput isRequired={false} name="discount" label={'Discount code or gift cart'} />
+                        <AnimatedInput defaultValue={''} isRequired={false} name="discount" label={'Discount code or gift cart'} />
                         <button className="discount-button">Apply</button>
                     </div>
                     <div className="bottom-row">

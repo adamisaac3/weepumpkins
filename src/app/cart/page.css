@@ -1,8 +1,65 @@
 
+.recently-viewed{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-color: rgb(240,255,240);
+    gap: 1.5rem;
+    border-bottom: 2px solid white;
+
+
+    .recent-head{
+        letter-spacing: 0.12rem;
+    }
+
+    .recents-container{
+        align-self: flex-start;
+        display: flex;
+        flex-direction: row;
+        margin: 2rem 3rem 2rem 3rem;
+        gap: 1.25rem;
+
+        .recent-item{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: .4rem;
+
+
+            .image-transition{
+                object-fit:scale-down;
+                background-color: rgb(200, 230, 200, .65);
+
+            }
+
+            .item-info{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: .3rem;
+                .item-head{
+                    display: flex;
+                    flex-direction: row;
+                    gap: .5rem;
+                }
+            }
+        }
+    }
+}
+
 main{
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    margin-top: 6rem;
+    padding-bottom: 11rem;
+    gap: .5rem;
+    background-color: rgb(240,255,240);
+    border-bottom: 2px solid white;
+    
 
     .cart-header{
         display: flex;
@@ -10,10 +67,6 @@ main{
         align-self: center;
         padding-top: 4rem;
         gap: .5rem;
-
-        .empty-cart{
-            padding-top: 2rem;
-        }
     }
 
 
@@ -67,7 +120,15 @@ main{
             display: flex;
             flex-direction: column;
             gap: 2rem;
-    
+            
+            .empty{
+                margin-top: .5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
             .cart-item {
                 display: flex;
                 flex-direction: row;

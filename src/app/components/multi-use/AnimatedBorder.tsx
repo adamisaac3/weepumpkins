@@ -2,7 +2,9 @@
 import {motion, useAnimation} from 'framer-motion'
 import { useEffect } from 'react'
 
-export default function AnimatedBorderBox(){
+import { ReactNode } from 'react';
+
+export default function AnimatedBorderBox({child}: {child: ReactNode}){
     const controls = useAnimation();
 
     useEffect(() => {
@@ -40,7 +42,7 @@ export default function AnimatedBorderBox(){
 
     return(
         <div className="four-oh-four-container">
-            <h1 style={{paddingRight: '1rem'}}>404</h1>
+            {child}
             <motion.div
                 className="border-anim"
                 style={{height: '0%', top: '50%'}}

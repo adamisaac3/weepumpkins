@@ -4,14 +4,9 @@ import Footer from '../footer/Footer'
 import ImageDiv from './ImageDiv'
 import ItemDescriptionDiv from './ItemDescriptionDiv'
 import Recommendations from './Recommendations'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { useRecentStore } from '@/app/stores/useRecentlyViewed'
 import { RecentItem } from '@/app/stores/useRecentlyViewed'
-
-type RecentImage = {
-    image_path: string,
-    image_type: string
-}
 
 export default function PageShell({item, thumbnail, alts} : {item: {productid: number, productname: string, categoryid: number, subcategoryid: number, description: string, price: number, dimensions: string, categoryname: string, subcategoryname: string, itemcount: number}, thumbnail: string, alts: string[]}){
 
@@ -20,24 +15,26 @@ export default function PageShell({item, thumbnail, alts} : {item: {productid: n
     const [searchOpen, setSearchOpen] = useState(false);
     const {addRecentItem} = useRecentStore();
 
+    useEffect(() => {
+        const recent_images = alts.map((alt) => ({
+            image_path: alt,
+            image_type: 'alt'
+        }))
 
-    const recent_images = alts.map((alt) => ({
-        image_path: alt,
-        image_type: 'alt'
-    }))
+        recent_images.push({image_path: thumbnail, image_type: 'thumbnail'})
+        const recentItem: RecentItem = {
+            product_name: item.productname,
+            product_id: item.productid,
+            price: item.price,
+            category_name: item.categoryname,
+            images: recent_images,
+            category_id: item.categoryid,
+            subcategory: item.subcategoryname
+        }
 
-    recent_images.push({image_path: thumbnail, image_type: 'thumbnail'})
-    const recentItem: RecentItem = {
-        product_name: item.productname,
-        product_id: item.productid,
-        price: item.price,
-        category_name: item.categoryname,
-        images: recent_images,
-        category_id: item.categoryid,
-        subcategory: item.subcategoryname
-    }
-
-    addRecentItem(recentItem);
+        addRecentItem(recentItem);
+    }, [item, alts, thumbnail, addRecentItem])
+    
 
     return (
             <>

@@ -8,20 +8,32 @@ import { useCartStore } from "@/app/stores/useCartStore"
 import {motion} from 'framer-motion'
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-
+import { useRecentStore } from "@/app/stores/useRecentlyViewed"
+import { RecentItem } from "@/app/stores/useRecentlyViewed"
+import SwappableImage from '../multi-use/SwappableImage'
+import AnimatedBorderBox from "../multi-use/AnimatedBorder"
 
 export default function PageShell(){
     const [navOpen, setNavOpen] = useState(false)
     const [searchOpen, setSearchOpen] = useState(false)
     const [cartOpen, setCartOpen] = useState(false)
     const [cart, setCart] = useState<CartItem[]>()
+    const [recent_items, setRecentItems] = useState<RecentItem[]>();
+
     const {items, removeCartItem} = useCartStore();
+    const {items: recentItems } = useRecentStore();
     const router = useRouter();
+    
 
 
     useEffect(() => {
         setCart(items)
-    }, [items])
+        
+        if(recentItems){
+            setRecentItems(recentItems.slice(0,5))
+        }
+    }, [items, recentItems])
+
 
     function hasDecimal(num: number){
         return num % 1 !== 0;
@@ -44,12 +56,14 @@ export default function PageShell(){
             <main>
                 <div className="cart-header">
                     <h1>CART</h1>
-                    <AnimatedLink href={'/collections/browse-all'} linkText="Continue Shopping" />
                 </div>  
                 <div className="cart-info">
                     <div className="cart-item-side">
                         {(!cart || cart.length <= 0) &&
-                            <p className="empty-cart">Your cart is currently empty.</p>
+                            <div className='empty'>
+                                <p className="empty-cart">Your cart is currently empty.</p>
+                                <AnimatedLink href={'/collections/browse-all'} linkText="Continue Shopping" />
+                            </div>
                         }
                         {cart && cart.length > 0 && 
                             cart.map((row, i) => {
@@ -105,6 +119,36 @@ export default function PageShell(){
                         }
                 </div>
             </main>
+            <aside className="recently-viewed">
+                <h2 className="recent-head">YOU RECENTLY VIEWED</h2>
+                <div className="recents-container">
+                    {recentItems && 
+                        recentItems.map((item) => {
+                            return(
+                                <div className="recent-item">
+                                    <SwappableImage
+                                        thumbnail={
+                                            item.images.find((i) => i.image_type === 'thumbnail')?.image_path || ''
+                                        }
+
+                                        alt={item.images.find((i) => i.image_type !== 'front' && i.image_type !== 'thumbnail')?.image_path || ''}
+                                        category={item.category_id}
+                                        width={220}
+                                        height={300}
+                                    />
+                                    <div className="item-info">
+                                        <div className="item-head">
+                                            <AnimatedBorderBox child={<p style={{paddingRight: '.5rem'}}>{item.product_name}</p>}/>
+                                            <p>{item.category_name}</p>
+                                        </div>
+                                        <p>$ {hasDecimal(item.price) ? item.price : item.price.toFixed(2)}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            </aside>
             <Footer navOpen={navOpen} />
         </>
     )

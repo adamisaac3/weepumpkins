@@ -2,8 +2,6 @@
 import {motion} from 'framer-motion'
 import { useState } from 'react'
 
-//You could also use React.ReactNode to make linkText actual child elements or full react blocks
-
 export default function AnimatedLink({href, linkText}: {href: string, linkText: string}){
     const [hovered, setHovered] = useState(false)
 
@@ -12,9 +10,17 @@ export default function AnimatedLink({href, linkText}: {href: string, linkText: 
             href={href}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            style={{ position: 'relative', display: 'inline-block', textDecoration: 'none', color: 'inherit', paddingBottom: '7px'}}
+            style={{ 
+                    position: 'relative', 
+                    display: 'inline-block', 
+                    textDecoration: 'none', 
+                    color: 'inherit', 
+                    paddingBottom: '7px',
+                    flexShrink: 0,
+                    flexGrow: 0
+                }}
         >
-        {linkText}
+        <span style={{whiteSpace: 'nowrap'}}>{linkText}</span>
         <span
             style={{
                 position: 'absolute',
@@ -23,7 +29,7 @@ export default function AnimatedLink({href, linkText}: {href: string, linkText: 
                 height: 2,
                 width: '100%',
                 backgroundColor: 'grey',
-                opacity: 0.3
+                opacity: 0.3,
             }}
         />
 
@@ -37,7 +43,7 @@ export default function AnimatedLink({href, linkText}: {href: string, linkText: 
                 bottom: 0,
                 left: 0,
                 height: 2,
-                backgroundColor: 'currentcolor'
+                backgroundColor: 'currentcolor',
             }}
         />
         </a>

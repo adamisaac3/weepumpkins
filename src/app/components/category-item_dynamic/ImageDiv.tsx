@@ -41,7 +41,7 @@ export default function Component({thumbnail, altImages, category} : {thumbnail:
                         exit={{x: direction * 400}}
                         transition={{duration: 0.5}}
                     >
-                        <Image width={600} className={`motion-image`} height={800} src={`https://jejfpctlmwnzbjejiljo.supabase.co/storage/v1/object/public/files/${category}/${image}`} alt="Image of clothing item" />
+                        <Image width={600} height={800} className={`motion-image`} src={`https://jejfpctlmwnzbjejiljo.supabase.co/storage/v1/object/public/files/${category}/${image}`} alt="Image of clothing item" />
                     </motion.div>
                 </AnimatePresence>
             </div>

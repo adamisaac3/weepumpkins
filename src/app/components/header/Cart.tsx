@@ -1,16 +1,23 @@
 'use client'
-import {useEffect, useRef} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import Image from 'next/image'
 import {motion, AnimatePresence} from 'framer-motion'
 import { useCartStore } from '@/app/stores/useCartStore'
 import { useRouter } from 'next/navigation'
+import Spinner from '../multi-use/Spinner'
 
 export default function Component({cartOpen, handleCartClicked} : {cartOpen: boolean, handleCartClicked: () => void}){
     
-    const {items: cart} = useCartStore();
-
+    const {items: cart, removeCartItem} = useCartStore();
+    const [loading, setLoading] = useState(false);
     const cartRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
+
+    function handleCheckoutClick(){
+        setLoading(true)
+        router.push('/checkout/information')
+        setLoading(false)
+    }
 
     useEffect(() => {
 
@@ -93,7 +100,7 @@ export default function Component({cartOpen, handleCartClicked} : {cartOpen: boo
                                             <p className="cart-item-cat-name">{row.category_name}</p>
                                             <div className="quantity-and-price">
                                                 <div className="quantity">
-                                                    <button className="minus-quantity">
+                                                    <button className="minus-quantity" onClick={() => removeCartItem(row.product_id)}>
                                                         <svg className="minus-quantity-icon" width="12px" height="12px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M6 12L18 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                                         </svg>
@@ -123,11 +130,19 @@ export default function Component({cartOpen, handleCartClicked} : {cartOpen: boo
                                 <p className="subtotal-amount">{getSubtotal()} USD</p>
                             </div>
                             <p className="subtotal-additional">Shipping, taxes, and discount codes calculated at checkout.</p>
-                            <button onClick={() => router.push('/checkout/information')} className="cart-checkout-button">CHECK OUT</button>
+                            <button onClick={() => handleCheckoutClick()} 
+                                className="cart-checkout-button" disabled={loading}>
+                                {!loading && 
+                                    <p>CHECK OUT</p>
+                                }
+                                {loading && 
+                                    <Spinner />
+                                }
+                            </button>
                         </motion.div>
                     </>
                 }
-                {(((cart && cart.length === 0) || !cart))&&  
+                {(((cart && cart.length === 0 && cartOpen) || !cart))&&  
                     <motion.div 
                         className="empty-cart"
                         initial={{opacity: 0}}

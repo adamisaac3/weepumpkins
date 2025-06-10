@@ -1,7 +1,12 @@
 *{
     padding: 0;
     margin: 0;
-    font-family: 'Asul', sans-serif;
+    /* Alt font
+    font-family: 'Asul', sans-serif; 
+    */
+
+    font-family: 'Figtree', sans-serif;
+
 }
 
 .not-found{
@@ -383,6 +388,9 @@
             border: none;
             cursor: pointer;
             background-color: #BCECAC;
+
+            display: flex;
+            justify-content: center;
         }
     }
 }
@@ -401,6 +409,7 @@
         opacity: 1;
     }
 }
+
 .fade-in{
     animation-name: fadeIn;
     animation-duration: 500ms;

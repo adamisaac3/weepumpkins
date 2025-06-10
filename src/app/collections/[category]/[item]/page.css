@@ -31,6 +31,7 @@ main{
     .item-details-div{
         display: flex;
         flex-direction: column;
+        flex: 1;
        
 
         .item-detail-header{
@@ -191,11 +192,12 @@ main{
     .image-div{
         display: flex;
         flex-direction: column;
+        flex: .95;
         gap: 1rem;
-        width: 70%;
         height: 750px;
         position: sticky;
         top: 7rem;
+        
         .current-display-image{
             overflow: hidden;
             position: relative;
@@ -226,6 +228,7 @@ main{
 
             .thumbnail{
                 cursor: pointer;
+                object-fit: cover;
             }
             .selected{
                 border: 2px solid black;

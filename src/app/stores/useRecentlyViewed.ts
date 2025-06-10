@@ -55,6 +55,6 @@ export const useRecentStore = create(persist<RecentState>((set) => ({
         items: state.items.filter((item) => item.product_id !== id)
     }))
 }), {
-    name: 'cart',
+    name: 'recentlyViewed',
     storage: zustandSessionStorage,
 }))
