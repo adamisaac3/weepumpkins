@@ -1,3 +1,85 @@
+.conflicts-box{
+    z-index: 10000;
+    position: fixed;
+    top: 50%;
+    background-color: white;
+    left: 50%;
+    width: 50vw;
+    height: 50vh;
+    max-width: 50vw;
+    max-height: 50vh;
+    overflow-y: scroll;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px rgb(0, 0, 0, .3);
+    padding: 10px;
+    font-size: smaller;
+    
+
+    .reserved-items{
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+
+        .reserved-item{
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            margin-left: 1rem;
+
+
+            .reserved-item-btns{
+                display: flex;
+                gap: 1rem;
+
+                .remove-item, .wait{
+                    padding: 1px;
+                    background: transparent;
+                    border: none;
+                    background-color: grey;
+                    cursor: pointer;
+                }
+            }
+
+            .reserved-item-info{
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+            }   
+        }
+    }
+
+    .conflict-head{
+        .box-top{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bottom{
+            padding-bottom: .5rem;
+            border-bottom: 1px dashed black;
+            margin-bottom: 1rem;
+        }
+    }
+    
+
+    .conflicts-footer{
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .reserved-items{
+        
+        max-height: 65%;
+        height: 65%;
+        overflow-y: scroll;
+    }
+}
+
 .checkout-main{
     display: flex;
     flex-direction: row;
