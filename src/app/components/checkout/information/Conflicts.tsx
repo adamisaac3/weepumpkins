@@ -3,6 +3,7 @@ import { useCartStore } from "@/app/stores/useCartStore"
 import { CartItem } from "@/app/types/types"
 import {parseISO, differenceInMinutes, differenceInMilliseconds} from 'date-fns'
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 type ReservedItem= {
     id: number,
     expires_at: string,
@@ -37,22 +38,28 @@ export default function ConflictsPopup({reserved_ids, cart} : {reserved_ids: Res
         const now = Date.now()
 
         const duration = differenceInMilliseconds(timestamp, now)
-
+        
+        const timerEnds = now + duration;
+        
         if(timerId && minWait){
             if(expiresAt < minWait){
                 clearTimeout(timerId)
                 setMinWait(expiresAt)
+                setTimerId(setTimeout(callback, duration))
+                setMinWait(expiresAt)
             }
         }
-        
-        setTimerId(setTimeout(callback, duration))
-        setMinWait(expiresAt)
-        
+        else{
+            setTimerId(setTimeout(callback, duration))
+            setMinWait(expiresAt)
+        }
     }
 
 
     function timeout(){
+        const router = useRouter();
 
+        router.push('/checkout/information')
     }
 
     return(
