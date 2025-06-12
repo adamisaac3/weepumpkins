@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     try{
         const db = await createAdminClient();
-
+        
         const {data, error} = await db.rpc('make_reservation', {product_ids: req_ids, req_session_id: sessionID})
 
         if(!error){

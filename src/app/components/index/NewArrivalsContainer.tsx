@@ -25,8 +25,7 @@ export default function NewArrivalsContainer(){
                 const response = await fetch('/api/get-recent-items');
                 
                 const items  = await response.json()
-                console.log('items ' + items);
-                
+                console.log(items);                
                 if(response.ok){
                     setProducts(items)
                 }
@@ -45,7 +44,7 @@ export default function NewArrivalsContainer(){
                 return(
                     <div key={p.product_id} className="recent-item">
                         <a className="item-anchor" href={p.product_url}>
-                            <SwappableImage thumbnail={p.thumbnail ? p.thumbnail : ''} alt={p.altImage ? p.altImage : ''} category={p.category_id}/>
+                            <SwappableImage width={250} height={250} thumbnail={p.thumbnail ? p.thumbnail : ''} alt={p.altImage ? p.altImage : ''} category={p.category_id}/>
                         </a>
                         <div className="arrival-name-category-div">
                             <p className="new-arrival-name">{p.product_name}</p>

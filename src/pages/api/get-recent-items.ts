@@ -69,7 +69,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(200).json(Object.values(itemMap))
         }
     
-        return res.status(400).json({error: "Error"})
+        return res.status(400).json({error: (error as Error).message})
     }
     catch(err){
         res.json({error: err instanceof Error ? err.message : "An unknown error occurred"}, )

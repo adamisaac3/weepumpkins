@@ -54,7 +54,7 @@ export default function PageShell(){
                 })    
                 
                 const data = await response.json()
-
+                console.log(data)
                 if(response.ok && data.reserved.reserved_items){
                     setReservedIds(data.reserved.reserved_items)
                 }

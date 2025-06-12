@@ -1,66 +1,14 @@
 'use client'
-import { useCartStore } from "@/app/stores/useCartStore"
 import { CartItem } from "@/app/types/types"
-import {parseISO, differenceInMinutes, differenceInMilliseconds} from 'date-fns'
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import ReservedItem from "./ReservedItem"
+
 type ReservedItem= {
     id: number,
     expires_at: string,
     product_sold: boolean
 }
 
-
-
-function getReservationTime(timestamp: string){
-    const expiresAt = parseISO(timestamp + 'Z');
-
-    const now = new Date()
-
-    const minutesRemaining = differenceInMinutes(expiresAt, now);
-
-    return minutesRemaining;
-}
-
 export default function ConflictsPopup({reserved_ids, cart} : {reserved_ids: ReservedItem[], cart: CartItem[]}){
-
-    const {removeCartItem} = useCartStore();
-    const [minWait, setMinWait] = useState<Date>();
-    const [timerId, setTimerId] = useState<ReturnType<typeof setTimeout> | null>(null);
-
-    function onRemoveClick(id: number){
-        removeCartItem(id);
-    }
-
-    function onWaitClick(timestamp: string, callback: () => void){
-        const expiresAt = parseISO(timestamp + 'Z');
-
-        const now = Date.now()
-
-        const duration = differenceInMilliseconds(timestamp, now)
-        
-        const timerEnds = now + duration;
-        
-        if(timerId && minWait){
-            if(expiresAt < minWait){
-                clearTimeout(timerId)
-                setMinWait(expiresAt)
-                setTimerId(setTimeout(callback, duration))
-                setMinWait(expiresAt)
-            }
-        }
-        else{
-            setTimerId(setTimeout(callback, duration))
-            setMinWait(expiresAt)
-        }
-    }
-
-
-    function timeout(){
-        const router = useRouter();
-
-        router.push('/checkout/information')
-    }
 
     return(
         <div className="conflicts-box">
@@ -86,26 +34,7 @@ export default function ConflictsPopup({reserved_ids, cart} : {reserved_ids: Res
                 {reserved_ids && 
                     reserved_ids.map((row) => {
                         return(
-                            <div className="reserved-item" key={row.id}>
-                                <div className="reserved-item-info">
-                                    <p>{'(' + cart.find(item => item.product_id === row.id)?.product_name || 'Product '} - {row.id})</p>
-                                    <svg width="13px" height="13px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M4 12H20M20 12L16 8M20 12L16 16" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                    </svg>
-                                    {row.product_sold && 
-                                        <p>product has been sold</p>
-                                    }
-                                    {!row.product_sold && 
-                                        <p>reserved for {getReservationTime(row.expires_at)} more minutes</p>    
-                                    }
-                                </div>
-                                <div className="reserved-item-btns">
-                                    <button className="remove-item" onClick={() => onRemoveClick(row.id)}>Remove</button>
-                                    {!row.product_sold && 
-                                        <button className="wait" onClick={() => onWaitClick(row.expires_at, timeout)}>Wait</button>
-                                    }
-                                </div>
-                            </div>
+                            <ReservedItem item={row} cart={cart} />
                         )
                     })
                 }
