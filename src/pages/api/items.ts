@@ -14,9 +14,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             req_category: req.query.category && typeof req.query.category === 'string' ? req.query.category.replace(/[^a-zA-Z0-9\s-]/g, '') : null,
             req_subcategory: req.query.subcategory && typeof req.query.subcategory === 'string' ? req.query.subcategory.replace(/[^a-zA-Z0-9\s-]/g, '') : null,
             req_minprice: req.query.minPrice && req.query.priceMin ? !isNaN(Number(req.query.priceMin)) : null,
-            req_maxprice: req.query.maxPrice && req.query.priceMax ? !isNaN(Number(req.query.priceMax)) : null
+            req_maxprice: req.query.maxPrice && req.query.priceMax ? !isNaN(Number(req.query.priceMax)) : null,
+            req_search: req.query['search-in'] && typeof(req.query['search-in']) === 'string' ? req.query['search-in'].replace(/[^a-zA-Z0-9\s-/_]/g, '') : null
         }
-
         const {data, error} = await db.rpc('get_items', values)
 
 

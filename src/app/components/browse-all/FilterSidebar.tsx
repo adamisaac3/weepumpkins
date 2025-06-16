@@ -1,7 +1,8 @@
 'use client'
 import {useState, useEffect, Dispatch} from 'react'
+import PriceSlider from '../multi-use/PriceSlider'
 
-export default function Component({filters, setFilters} : {filters: {category: string, subcategory: string, minPrice: string, maxPrice: string}, setFilters: Dispatch<React.SetStateAction<{category: string, subcategory: string, minPrice: string, maxPrice: string}>>}){
+export default function Component({filters, setFilters, maxPrice} : {filters: {category: string, subcategory: string, minPrice: string, maxPrice: string, search: string}, setFilters: Dispatch<React.SetStateAction<{category: string, subcategory: string, minPrice: string, maxPrice: string, search: string}>>, maxPrice: number}){
 
     type Category = {cat_id: number, subcats: {subcat_id: number, subcat_name: string}[]}
 
@@ -37,6 +38,8 @@ export default function Component({filters, setFilters} : {filters: {category: s
                     else if(row.subcategoryid){
                         categories[row.categoryname].subcats.push({subcat_id: row.subcategoryid, subcat_name: row.subcategoryname});
                     }
+                    
+                    
                 })
 
                 setCategories(cats);
@@ -68,8 +71,11 @@ export default function Component({filters, setFilters} : {filters: {category: s
         <aside className="filter-sidebar">
 
             <h2>Filters</h2>
-
-            <select onChange={(e) => handleCategoryChange(e.target.value)}>
+            <div className="search">
+                <label htmlFor="search-in">Search</label>
+                <input type="search" name="search-in" className="search-in" />
+            </div>
+            <select className="category-select" onChange={(e) => handleCategoryChange(e.target.value)}>
                 <option value="">All Categories</option>
                 {categories && 
                     categories.map((c) => {
@@ -80,7 +86,7 @@ export default function Component({filters, setFilters} : {filters: {category: s
                 }
             </select>
 
-            <select onChange={(e) => handleSubcategoryChange(e.target.value)}>
+            <select className="subcategory-select" onChange={(e) => handleSubcategoryChange(e.target.value)}>
                 <option value="">All Subcategories</option>
                 {subcategories && 
                     subcategories.map((s) => {
@@ -91,12 +97,9 @@ export default function Component({filters, setFilters} : {filters: {category: s
                 }
             </select>
 
-            <label htmlFor="minPrice">MinPrice: </label>
-            <input type="number" name="minPrice" min='0' max="1000000" defaultValue="0"></input>
-
-            <label htmlFor="maxPrice">MaxPrice: </label>
-            <input type="number" name="maxPrice" min="0" max="1000000" defaultValue="100000"></input>
-
+            {maxPrice && 
+                <PriceSlider maxPrice={maxPrice} />
+            }
         </aside>
     )
 }

@@ -4,12 +4,12 @@ import ItemGrid from '../multi-use/ItemGrid'
 import FilterSidebar from './FilterSidebar'
 
 export default function Component({setProductCount} : {setProductCount: Dispatch<SetStateAction<number | undefined>>}) {
-    const [filters, setFilters] = useState({category: '', subcategory: '', minPrice: '', maxPrice: ''})
-    
+    const [filters, setFilters] = useState({category: '', subcategory: '', minPrice: '', maxPrice: '', search: ''})
+    const [maxPrice, setMaxPrice] = useState(0)
     return(
         <div className="browse-all-div">
-            <FilterSidebar filters={filters} setFilters={setFilters} />
-            <ItemGrid filters={filters} />
+            <FilterSidebar maxPrice={maxPrice} filters={filters} setFilters={setFilters} />
+            <ItemGrid setMaxPrice={setMaxPrice} filters={filters} />
         </div>
     )
 }
