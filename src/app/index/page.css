@@ -15,12 +15,7 @@ main{
     }
 
     .recent-items-div {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap-reverse;
-        gap: 3rem;
+        
 
         .recent-item {
             display: flex;

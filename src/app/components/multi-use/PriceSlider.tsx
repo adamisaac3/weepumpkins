@@ -1,15 +1,12 @@
 import Slider from "rc-slider"
-import Range from 'rc-slider'
 import 'rc-slider/assets/index.css'
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 export default function PriceSlider({maxPrice} : {maxPrice: number}){
     const [range, setRange] = useState([0, maxPrice])
     
-    const clamp = (val: number, min: number) => Math.max(min, Math.min(val, maxPrice))
+    //const clamp = (val: number, min: number) => Math.max(min, Math.min(val, maxPrice))
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = clamp(Number(e.target.value), 0)
-
         if(e.target.name === 'min'){
             const clampedMin = Math.max(0, Math.min(Number(e.target.value), range[1]))
             setRange([clampedMin, range[1]])

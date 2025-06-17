@@ -34,7 +34,7 @@ export default function ConflictsPopup({reserved_ids, cart} : {reserved_ids: Res
                 {reserved_ids && 
                     reserved_ids.map((row) => {
                         return(
-                            <ReservedItem item={row} cart={cart} />
+                            <ReservedItem key={row.id} item={row} cart={cart} />
                         )
                     })
                 }

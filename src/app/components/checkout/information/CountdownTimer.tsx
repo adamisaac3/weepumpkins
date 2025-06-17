@@ -8,6 +8,8 @@ export default function Countdown({timestamp} : {timestamp: string}){
         differenceInSeconds(parseISO(timestamp), new Date())
     );
 
+    const router = useRouter()
+
     useEffect(() => {
         const interval = setInterval(() => {
             const now  = Date.now()
@@ -17,16 +19,12 @@ export default function Countdown({timestamp} : {timestamp: string}){
 
             if(secondsLeft <= 0){
                 clearInterval(interval);
+                router.push('/checkout/information')
             }
         }, 100)
         
         return () => clearInterval(interval)
-    }, [timestamp])
-
-    if(seconds <= 0){
-        const router = useRouter()
-        router.push('/checkout/information')
-    }
+    }, [timestamp, router])
     
     const minutes = Math.floor(seconds/ 60);
     const secs = minutes % 60;

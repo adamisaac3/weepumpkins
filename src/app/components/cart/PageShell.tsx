@@ -122,10 +122,10 @@ export default function PageShell(){
             <aside className="recently-viewed">
                 <h2 className="recent-head">YOU RECENTLY VIEWED</h2>
                 <div className="recents-container">
-                    {recentItems && 
-                        recentItems.map((item) => {
+                    {recent_items && 
+                        recent_items.map((item) => {
                             return(
-                                <div className="recent-item">
+                                <div className="recent-item" key={item.product_id}>
                                     <SwappableImage
                                         thumbnail={
                                             item.images.find((i) => i.image_type === 'thumbnail')?.image_path || ''

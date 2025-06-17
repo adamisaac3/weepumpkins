@@ -81,16 +81,16 @@ export default function ConfirmPageShell(){
             setLoading(false)
         }
         fetchOrder();
-    }, [])
+    }, [payment_intent, router])
     
 
     useEffect(() => {
         if(items){
-            for(let item of items){
+            for(const item of items){
                 removeCartItem(item.id);
             }        
         }
-    }, [items])
+    }, [items, removeCartItem])
 
     function formatDate(date: Date){
         return format(date, 'MMMM do, yyyy')
@@ -129,14 +129,14 @@ export default function ConfirmPageShell(){
                                 <p className="estimated-dates">{estimatedDates ? formatDate(estimatedDates[0]) : ''} - {estimatedDates ? formatDate(estimatedDates[1]) : ''}</p>
                             </div>
                             
-                            <p>We'll send you an email with all the details.</p>
+                            <p>We&apos;ll send you an email with all the details.</p>
                         </div>
                     </div>
                     <div className="feedback">
                         <form className="feedback-form">
                             <div className="main-head">
-                                <p>I'd love to hear feedback!</p>
-                                <p>Any product ideas or things you'd love to see from me?</p>
+                                <p>I&apos;d love to hear feedback!</p>
+                                <p>Any product ideas or things you&apos;d love to see from me?</p>
                             </div>
                             <p className="additional-head">You can also send a <AnimatedLink href="/contact" linkText="personalized message" /> to hear back from me!</p>
                             <textarea className="form-input" required name="recommendation"/>

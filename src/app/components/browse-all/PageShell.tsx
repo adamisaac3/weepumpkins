@@ -8,7 +8,6 @@ import {useState} from 'react'
 export default function PageShell(){
     const [navOpen, setNavOpen] = useState<boolean>(false);
     const [cartOpen, setCartOpen] = useState<boolean>(false);
-    const [product_count, setProductCount] = useState<number>(); 
     const [searchOpen, setSearchOpen] = useState<boolean>(false);
     return (
         <>
@@ -16,7 +15,7 @@ export default function PageShell(){
 
             <main className={`${(navOpen || cartOpen || searchOpen) ? 'main-content-blurred' : ''}`}>
                 <Image className="browse-all-art" src="/browse-all-art.png" width={770} height={137} alt="art image for browse all" />
-                <BrowseAll setProductCount={setProductCount}/>
+                <BrowseAll />
             </main>
 
             <Footer navOpen={navOpen}/>

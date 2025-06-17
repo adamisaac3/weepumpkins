@@ -12,7 +12,7 @@ export default function Component({filters, setMaxPrice} : {filters: { category:
     const [maxPage, setMaxPage] = useState<number>();
     
     const limit = 1;
-    const offset = (page - 1) * limit;
+    //const offset = (page - 1) * limit;
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -109,7 +109,7 @@ export default function Component({filters, setMaxPrice} : {filters: { category:
                 url: String(item.url ?? ""),
             })));
         };
-    }, [items, images])
+    }, [items, images, maxPage, productDisplay, setMaxPrice])
     
     const hasDecimal = (num: number) => {
         if(num % 1 !== 0){

@@ -35,7 +35,7 @@ export default function PageShell(){
             setSessionID(seshID)
         }
 
-    }, [seshID, items])
+    }, [seshID, items, generateSessionID])
 
     useEffect(() => {
         if(cart && sessionID){
@@ -54,7 +54,7 @@ export default function PageShell(){
                 })    
                 
                 const data = await response.json()
-                console.log(data)
+
                 if(response.ok && data.reserved.reserved_items){
                     setReservedIds(data.reserved.reserved_items)
                 }
@@ -64,11 +64,6 @@ export default function PageShell(){
             sendReservation();
         }
     }, [cart, sessionID])
-    
-
-    useEffect(() => {
-        console.log(reservedIds)
-    }, [reservedIds])
 
     return(
         <>

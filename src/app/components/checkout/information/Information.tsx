@@ -9,12 +9,7 @@ import Spinner from '../../multi-use/Spinner'
 
 export default function InformationForm(){
     const {email, country, company, apartment, city, state, zipcode, first_name, last_name, address, setCheckoutInfo, phone} = useCheckoutStore();
-    const [loading, setLoading] = useState(false);
-
-    const handleInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCheckoutInfo({[e.target.name]: e.target.value})
-    }
-    
+    const [loading, setLoading] = useState(false);    
     const formRef = useRef<HTMLFormElement>(null);
     const router = useRouter();
 
@@ -38,7 +33,7 @@ export default function InformationForm(){
         setLoading(false);
     }
 
-
+    /*
     const testLoading = async (e: React.FormEvent) => {
         setLoading(true)
         e.preventDefault();
@@ -49,7 +44,7 @@ export default function InformationForm(){
 
         setLoading(false)
     }
-
+    */
 
     return(
         <div className="info-side">

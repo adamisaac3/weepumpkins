@@ -1,7 +1,7 @@
 'use client'
 import { useCartStore } from "@/app/stores/useCartStore"
 import { CartItem } from "@/app/types/types"
-import { differenceInMinutes, differenceInSeconds, parseISO } from "date-fns"
+import { differenceInMinutes, parseISO } from "date-fns"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
 
@@ -25,6 +25,7 @@ export default function ReservedItem({item: row, cart}: {item: ReservedItem, car
 
     const {removeCartItem} = useCartStore();
     const [wait, setWait] = useState(false);
+    const router = useRouter()
     
     function onRemoveClick(id: number){
         removeCartItem(id);
@@ -46,13 +47,12 @@ export default function ReservedItem({item: row, cart}: {item: ReservedItem, car
             }
 
             if(wait && minutes <= 0){
-                const router = useRouter()
                 router.push('/checkout/information')
             }
         }, 100)
         
         return () => clearInterval(interval)
-    }, [row.expires_at])
+    }, [row.expires_at, minutes, wait, router])
 
     return(
         <div className="reserved-item" key={row.id}>

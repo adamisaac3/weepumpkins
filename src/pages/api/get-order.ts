@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import { createAdminClient } from '../../../utils/supabase/server'
-
+/*
 type Order = {
     payment_intent: string,
     price: number,
@@ -15,6 +15,7 @@ type Order = {
     phone: string,
     ordered_at: string
 }
+*/
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
     if(req.method !== 'GET' || !req.query['payment_intent']){
@@ -37,10 +38,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if(!error){
             return res.status(200).json(data)
         }
-
+        console.log(error);
         return res.status(400).json({error: 'Error'})
     }
     catch(err){
+        console.log(err)
         return res.status(400).json({error: "Error"})
     }
 }

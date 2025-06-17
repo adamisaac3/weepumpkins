@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 import { useCheckoutStore } from "@/app/stores/useCheckoutStore"
 
-export default function initCheckoutStore(){
+export default function useInitCheckoutStore(){
     const [hydrated, setHydrated] = useState(false);
 
     useEffect(() => {
@@ -14,6 +14,10 @@ export default function initCheckoutStore(){
             setHydrated(true);
         }
 
+        if(hydrated){
+            return
+        }
+
         return unsub?.();
-    }, []);
+    }, [hydrated]);
 }

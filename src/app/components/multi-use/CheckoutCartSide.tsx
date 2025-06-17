@@ -1,4 +1,3 @@
-import { useCartStore } from '@/app/stores/useCartStore';
 import Image from 'next/image'
 import AnimatedInput from './AnimatedInput'
 import { CartItem } from '@/app/types/types';

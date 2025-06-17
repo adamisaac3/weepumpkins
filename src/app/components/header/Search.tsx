@@ -20,7 +20,7 @@ export default function Component({searchOpen, setSearchOpen} : {searchOpen: boo
     const [debouncedQuery, setDebouncedQuery] = useState<string>();
     const [products, setProducts] = useState<Product[]>()
     const [collections, setCollections] = useState<Collection[]>();
-    const [loading, setLoading] = useState<boolean>();
+    //const [loading, setLoading] = useState<boolean>();
 
     const handleSearchClicked = () => setSearchOpen(!searchOpen);
 
@@ -56,7 +56,7 @@ export default function Component({searchOpen, setSearchOpen} : {searchOpen: boo
         }
         
         const fetchItems = async () => {
-            setLoading(true);
+            //setLoading(true);
             const response = await fetch(`/api/search?q=${encodeURIComponent(debouncedQuery)}`);
             const {products, collections} = await response.json();
 
@@ -124,7 +124,7 @@ export default function Component({searchOpen, setSearchOpen} : {searchOpen: boo
                                         }
                                     </div>
                                     <button className="search-results-button">
-                                        <p>Search all results for "{debouncedQuery}"</p>
+                                        <p>Search all results for &quot;{debouncedQuery}&quot;</p>
                                         <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M4 12H20M20 12L16 8M20 12L16 16" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
@@ -132,7 +132,7 @@ export default function Component({searchOpen, setSearchOpen} : {searchOpen: boo
                                     </>
                                 }
                                 {((products && products.length <= 0) && (collections && collections.length <= 0)) &&
-                                    <p className={'no-results'}>Search for "{debouncedQuery}"</p>
+                                    <p className={'no-results'}>Search for &quot;{debouncedQuery}&quot;</p>
                                 }
                                 </div>
                         }

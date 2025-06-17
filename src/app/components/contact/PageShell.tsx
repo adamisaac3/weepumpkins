@@ -40,7 +40,7 @@ export default function ContactPageShell(){
             }
             setError(true);
         }
-        catch(error){
+        catch{
             setError(true)
         }
     }

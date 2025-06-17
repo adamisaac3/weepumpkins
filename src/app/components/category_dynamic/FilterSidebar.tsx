@@ -1,10 +1,12 @@
 'use client'
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import PriceSlider from "../multi-use/PriceSlider"
 type Filter = {
     category: string,
     subcategory: string,
     minPrice: string,
-    maxPrice: string
+    maxPrice: string,
+    search: string
 }
 
 type Subcategory = {
@@ -12,7 +14,7 @@ type Subcategory = {
     subcat_id: number
 }
 
-export default function Component({filters, setFilters, category} : {filters: Filter, setFilters: Dispatch<SetStateAction<Filter>>, category: string}){
+export default function Component({filters, setFilters, category, maxPrice} : {filters: Filter, setFilters: Dispatch<SetStateAction<Filter>>, category: string, maxPrice: number}){
     const [subcategories, setSubcategories] = useState<Subcategory[]>();
 
     useEffect(() => {
@@ -27,7 +29,7 @@ export default function Component({filters, setFilters, category} : {filters: Fi
         }
 
         fetchSubcats();
-    }, [])
+    }, [category])
 
     function handleSubcat(select: string){
         setFilters({...filters, subcategory: select})
@@ -47,12 +49,7 @@ export default function Component({filters, setFilters, category} : {filters: Fi
                     })
                 }
             </select>
-            <label htmlFor="minPrice">Choose minimum price: </label>
-            <input name="minPrice" type="number" min="0" max="100000" defaultValue="0"></input>
-
-            <label htmlFor="maxPrice">Choose maximum price: </label>
-            <input name="maxPrice" type="number" min="0" max="100000" defaultValue="0"></input>
-
+            <PriceSlider maxPrice={maxPrice} />
         </aside>
     )
 

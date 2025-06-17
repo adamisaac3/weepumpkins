@@ -1,9 +1,9 @@
 'use client'
-import {SetStateAction, useState, Dispatch} from 'react'
+import {useState} from 'react'
 import ItemGrid from '../multi-use/ItemGrid'
 import FilterSidebar from './FilterSidebar'
 
-export default function Component({setProductCount} : {setProductCount: Dispatch<SetStateAction<number | undefined>>}) {
+export default function Component() {
     const [filters, setFilters] = useState({category: '', subcategory: '', minPrice: '', maxPrice: '', search: ''})
     const [maxPrice, setMaxPrice] = useState(0)
     return(

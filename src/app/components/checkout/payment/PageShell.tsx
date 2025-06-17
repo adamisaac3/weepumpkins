@@ -10,7 +10,7 @@ import initCheckoutStore from '../../multi-use/initCheckoutStore'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
 
-function initCart(){
+function useInitCart(){
      
     const [hydrated, setHydrated] = useState(false);
 
@@ -33,7 +33,7 @@ export default function PageShell(){
     const [clientSecret, setClientSecret] = useState('')
     const {items} = useCartStore();
 
-    const hydrated = initCart();
+    const hydrated = useInitCart();
 
     initCheckoutStore();
     const {email, country, first_name, last_name, address, apartment, city, state, zipcode, phone} = useCheckoutStore();
@@ -69,7 +69,7 @@ export default function PageShell(){
         }
         
         fetchPaymentIntent();
-    }, [hydrated, items])
+    }, [hydrated, items, email, country, first_name, last_name, address, apartment, city, state, zipcode, phone])
 
     return (
         <>
@@ -84,7 +84,7 @@ export default function PageShell(){
                         </Elements>
                     }
                 </div>
-                <CheckoutCartSide />
+                <CheckoutCartSide cart={items}/>
             </section>
         </>
     )

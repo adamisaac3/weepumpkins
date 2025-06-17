@@ -57,7 +57,7 @@ export default function Component({category, id}: {category: number, id: number}
                     items.map((item) => {
                         return (
                             <div key={item.id} className="recommendations-item">
-                                <SwappableImage thumbnail={item.thumbnail} alt={item.altImages[0]} category={item.category_id}/>
+                                <SwappableImage width={250} height={250} thumbnail={item.thumbnail} alt={item.altImages[0]} category={item.category_id}/>
 
                             </div>
                         )

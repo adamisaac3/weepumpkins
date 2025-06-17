@@ -5,7 +5,6 @@ import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { useState, useRef } from "react";
 import Spinner from '../../multi-use/Spinner'
 import { useRouter } from "next/navigation";
-import { AddressElement } from "@stripe/react-stripe-js";
 
 export default function Component(){
     const {company, email, country, first_name, last_name, address, apartment, city, state, zipcode, phone} = useCheckoutStore();
@@ -53,6 +52,7 @@ export default function Component(){
         setLoading(false)
     }
     
+    /*
     const testLoading = async (e: React.FormEvent) => {
         setLoading(true)
         e.preventDefault();
@@ -63,6 +63,7 @@ export default function Component(){
 
         setLoading(false)
     }
+    */
 
     return(
         <>
